@@ -1,0 +1,2 @@
+example:
+  name: ${env.example.name:World}

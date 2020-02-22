@@ -1,0 +1,48 @@
+plugins {
+	id 'org.springframework.boot'
+	id 'io.spring.dependency-management'
+	id 'java-library'
+	id 'maven-publish'
+}
+
+group = 'me.paulschwarz'
+version = '0.0.1'
+sourceCompatibility = '1.8'
+
+bootJar {
+	enabled = false
+}
+
+jar {
+	enabled = true
+}
+
+dependencies {
+	implementation "io.github.cdimascio:java-dotenv:$dotenvVersion"
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
+
+publishing {
+	repositories {
+		maven {
+			name = 'GitHubPackages'
+			url = uri('https://maven.pkg.github.com/paulschwarz/spring-dotenv')
+			credentials {
+				username = System.getenv('USERNAME')
+				password = System.getenv('PASSWORD')
+			}
+		}
+	}
+	publications {
+		gpr(MavenPublication) {
+			from(components.java)
+		}
+	}
+}

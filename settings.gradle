@@ -1,0 +1,6 @@
+rootProject.name = 'spring-dotenv-project'
+
+include 'library'
+include 'application'
+
+project(':library').name = 'spring-dotenv'
