@@ -18,4 +18,6 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+	environment 'EXAMPLE_MESSAGE_2', 'Message 2 from system environment'
+	environment 'EXAMPLE_MESSAGE_3', 'Message 3 from system environment'
 }

@@ -1,0 +1,5 @@
+example:
+  name: ${env.EXAMPLE_NAME:World}
+  value1: ${env.EXAMPLE_MESSAGE_1}
+  value2: ${env.EXAMPLE_MESSAGE_2}
+  value3: ${env.EXAMPLE_MESSAGE_3}

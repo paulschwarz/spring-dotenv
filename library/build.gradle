@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'me.paulschwarz'
-version = '0.0.1'
+version = '0.0.2'
 sourceCompatibility = '1.8'
 
 bootJar {
@@ -27,6 +27,8 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+	environment 'EXAMPLE_MESSAGE_2', 'Message 2 from system environment'
+	environment 'EXAMPLE_MESSAGE_3', 'Message 3 from system environment'
 }
 
 publishing {
