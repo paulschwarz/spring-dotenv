@@ -21,47 +21,7 @@ Loading environment variables from the .env is for your development convenience 
 
 It is common, however, to commit a .env.example file to source control which documents the available variables and gives developers an understanding of how to create their own local .env file.
 
-### Using Maven?
-
-Add this to pom.xml
-
-```xml
-<dependency>
-  <groupId>me.paulschwarz</groupId>
-  <artifactId>spring-dotenv</artifactId>
-  <version>0.0.1</version>
-</dependency>
-```
-
-Install the package
-
-```bash
-$ mvn install
-```
-
-### Using Gradle? 
-
-Using Groovy, add this to build.gradle
-
-```groovy
-dependencies {
-    implementation 'me.paulschwarz.spring-dotenv'
-}
-```
-
-Or if using Kotlin, add this to build.gradle.kts
-
-```kotlin
-dependencies {
-    implementation("me.paulschwarz.spring-dotenv")
-}
-```
-
-Install the package
-
-```bash
-$ gradle install
-```
+[Installation instructions here https://github.com/paulschwarz/spring-dotenv/packages/135114](https://github.com/paulschwarz/spring-dotenv/packages/135114)
 
 ## Usage
 
