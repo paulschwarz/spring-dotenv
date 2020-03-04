@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'me.paulschwarz'
-version = '0.0.3'
+version = '0.0.4'
 sourceCompatibility = '1.8'
 
 bootJar {
@@ -19,7 +19,7 @@ jar {
 
 dependencies {
 	implementation "io.github.cdimascio:java-dotenv:$dotenvVersion"
-	implementation 'org.springframework.boot:spring-boot-starter'
+	compileOnly 'org.springframework.boot:spring-boot-starter'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
