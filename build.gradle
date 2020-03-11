@@ -4,7 +4,7 @@ plugins {
 }
 
 ext {
-    dotenvVersion = '5.1.3'
+    dotenvVersion = '5.1.4'
 }
 
 allprojects {
