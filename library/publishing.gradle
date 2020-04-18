@@ -1,0 +1,80 @@
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+
+def pomConfig = {
+    packaging 'jar'
+    developers {
+        developer {
+            id 'paulschwarz'
+            name 'Paul Schwarz'
+            email 'paul@paulschwarz.me'
+        }
+    }
+    scm {
+        url 'https://github.com/paulschwarz/spring-dotenv'
+        connection 'scm:git:git://github.com/paulschwarz/spring-dotenv.git'
+        developerConnection 'scm:git:git://github.com/paulschwarz/spring-dotenv.git'
+    }
+    issueManagement {
+        system 'GitHub'
+        url 'https://github.com/paulschwarz/spring-dotenv/issues'
+    }
+    licenses {
+        license {
+            name 'The MIT License'
+            url 'http://opensource.org/licenses/MIT'
+            distribution 'repo'
+        }
+    }
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        library(MavenPublication) {
+            from components.java
+            groupId 'me.paulschwarz'
+            artifactId 'spring-dotenv'
+            version project.version
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', 'Provides a Dotenv property source for Spring')
+                root.appendNode('name', 'spring-dotenv')
+                root.appendNode('url', 'https://github.com/paulschwarz/spring-dotenv')
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}
+
+bintray {
+    user = project.hasProperty('bintray.user') ? project.property('bintray.user') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintray.apikey') ? project.property('bintray.apikey') : System.getenv('BINTRAY_API_KEY')
+    publish = true
+    publications = ['library']
+    pkg {
+        repo = 'maven'
+        name = 'spring-dotenv'
+        websiteUrl = 'https://github.com/paulschwarz/spring-dotenv'
+        issueTrackerUrl = 'https://github.com/paulschwarz/spring-dotenv/issues'
+        vcsUrl = 'https://github.com/paulschwarz/spring-dotenv.git'
+        licenses = ['MIT']
+        labels = ['spring', 'springboot', 'dotenv', '12factor', '12factor app', 'config', 'environment', 'env']
+        publicDownloadNumbers = true
+        githubRepo = 'paulschwarz/spring-dotenv'
+        githubReleaseNotesFile = 'README.md'
+        version {
+            name = project.version
+            vcsTag = "v${project.version}"
+            released = new Date()
+            gpg {
+                sign = true
+                passphrase = project.hasProperty('bintray.gpgpassphrase') ? project.property('bintray.gpgpassphrase') : System.getenv('BINTRAY_GPGPASSPHRASE')
+            }
+        }
+    }
+}

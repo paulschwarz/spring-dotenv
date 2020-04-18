@@ -31,4 +31,5 @@ out/
 .vscode/
 
 ### Local Configuration ###
+gradle.properties
 .env

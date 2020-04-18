@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.2.4.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'com.jfrog.bintray' version '1.8.5' apply false
 }
 
 ext {
@@ -8,6 +9,9 @@ ext {
 }
 
 allprojects {
+    group = 'me.paulschwarz'
+    version = '0.0.6'
+
     repositories {
         mavenCentral()
         jcenter()

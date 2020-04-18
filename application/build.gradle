@@ -4,8 +4,10 @@ plugins {
 	id 'java'
 }
 
-group = 'me.paulschwarz'
-version = '0.0.1-SNAPSHOT'
+bootJar {
+	enabled = false
+}
+
 sourceCompatibility = '1.8'
 
 dependencies {
