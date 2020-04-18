@@ -1,12 +1,13 @@
 # 🗝️ spring-dotenv 
-![build](https://github.com/paulschwarz/spring-dotenv/workflows/build/badge.svg)
-![Bintray](https://img.shields.io/bintray/v/paulschwarz/maven/spring-dotenv) 
-![Maven Central](https://img.shields.io/maven-central/v/me.paulschwarz/spring-dotenv)
+![CI](https://github.com/paulschwarz/spring-dotenv/workflows/CI/badge.svg)
+![CD](https://github.com/paulschwarz/spring-dotenv/workflows/CD/badge.svg)
+![Bintray](https://img.shields.io/bintray/v/paulschwarz/maven/spring-dotenv?color=blue) 
+![Maven Central](https://img.shields.io/maven-central/v/me.paulschwarz/spring-dotenv?color=blue)
 ![GitHub](https://img.shields.io/github/license/paulschwarz/spring-dotenv?color=orange)
 ![GitHub stars](https://img.shields.io/github/stars/paulschwarz/spring-dotenv?color=yellowgreen)
 
-<a href='https://bintray.com/paulschwarz/maven/spring-dotenv?source=watch' alt='Get automatic notifications about new "spring-dotenv" versions'>
-  <img src='https://www.bintray.com/docs/images/bintray_badge_bw.png'>
+<a href='https://bintray.com/paulschwarz/maven/spring-dotenv?source=watch'>
+  <img alt='Get automatic notifications about new "spring-dotenv" versions' src='https://www.bintray.com/docs/images/bintray_badge_bw.png'>
 </a>
 
 Provides a Spring [PropertySource](https://github.com/spring-projects/spring-framework/blob/v5.2.3.RELEASE/spring-core/src/main/java/org/springframework/core/env/PropertySource.java) that delegates to the excellent [java-dotenv](https://github.com/cdimascio/java-dotenv) library.

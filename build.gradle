@@ -8,9 +8,15 @@ ext {
     dotenvVersion = '5.1.4'
 }
 
+def releaseVersion = project.hasProperty('release.version') ? project.property('release.version') : System.getenv('RELEASE_VERSION')
+
+if (! releaseVersion) {
+    throw new GradleException('You must specify "release.version" or "RELEASE_VERSION"')
+}
+
 allprojects {
     group = 'me.paulschwarz'
-    version = '0.0.6'
+    version = releaseVersion
 
     repositories {
         mavenCentral()

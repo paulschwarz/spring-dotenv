@@ -1,15 +1,25 @@
-name: build
+name: CI
 
-on: 
+on:
   push:
-    branches: 
+    branches:
       - master
-  
+    tags-ignore:
+      - '**'
+  pull_request:
+    branches:
+      - master
+    tags-ignore:
+      - '**'
+
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\/v/}
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
         with:
@@ -23,9 +33,6 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
-        run: ./gradlew build
-      - name: Publish
-        run: ./gradlew publish
-        env: 
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.GITHUB_TOKEN }}   
+        run: ./gradlew build --console=plain
+        env:
+          RELEASE_VERSION: ${{ steps.get_version.outputs.VERSION }}
