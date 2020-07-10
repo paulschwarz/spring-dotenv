@@ -51,7 +51,6 @@ jobs:
               <groupId>me.paulschwarz</groupId>
               <artifactId>spring-dotenv</artifactId>
               <version>${{ steps.get_version.outputs.VERSION }}</version>
-              <type>pom</type>
             </dependency>
             ```
 
