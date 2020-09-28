@@ -4,7 +4,8 @@ plugins {
 	id 'java-library'
 }
 
-sourceCompatibility = '1.8'
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
 
 bootJar {
 	enabled = false
@@ -15,7 +16,7 @@ jar {
 }
 
 dependencies {
-	implementation "io.github.cdimascio:java-dotenv:$dotenvVersion"
+	implementation "io.github.cdimascio:dotenv-java:$dotenvVersion"
 	compileOnly 'org.springframework.boot:spring-boot-starter'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

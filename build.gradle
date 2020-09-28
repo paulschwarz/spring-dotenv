@@ -5,7 +5,7 @@ plugins {
 }
 
 ext {
-    dotenvVersion = '5.1.4'
+    dotenvVersion = '2.0.0'
 }
 
 def releaseVersion = project.hasProperty('release.version') ? project.property('release.version') : System.getenv('RELEASE_VERSION')
