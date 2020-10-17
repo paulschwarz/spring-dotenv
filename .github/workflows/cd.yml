@@ -59,10 +59,15 @@ jobs:
             ```
             implementation 'me.paulschwarz:spring-dotenv:${{ steps.get_version.outputs.VERSION }}'
             ```
-      - name: Publish
+      - name: Publish to Bintray
         run: ./gradlew bintrayUpload --console=plain
         env:
           RELEASE_VERSION: ${{ steps.get_version.outputs.VERSION }}
           BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
-          BINTRAY_API_KEY: ${{ secrets.BINTRAY_API_KEY }}   
-          BINTRAY_GPGPASSPHRASE: ${{ secrets.BINTRAY_GPGPASSPHRASE }}
+          BINTRAY_API_KEY: ${{ secrets.BINTRAY_API_KEY }}
+          SIGNING_PASSWORD: ${{ secrets.GPG_SECRET }}
+      - name: Publish to OSSRH
+        run: ./gradlew publish --console=plain
+        env:
+          SIGNING_PASSWORD: ${{ secrets.GPG_SECRET }}
+          SIGNING_KEY: ${{ secrets.GPG_PUBLIC_KEY_AMORED }}

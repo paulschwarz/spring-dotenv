@@ -4,8 +4,12 @@ plugins {
 	id 'java-library'
 }
 
+description = 'Provides a Dotenv property source for Spring'
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
+ext {
+	url = 'https://github.com/paulschwarz/spring-dotenv'
+}
 
 bootJar {
 	enabled = false
@@ -13,6 +17,11 @@ bootJar {
 
 jar {
 	enabled = true
+}
+
+java {
+	withJavadocJar()
+	withSourcesJar()
 }
 
 dependencies {
@@ -29,4 +38,5 @@ test {
 	environment 'EXAMPLE_MESSAGE_3', 'Message 3 from system environment'
 }
 
-apply from: file('publishing.gradle')
+apply from: file('publish-to-bintray.gradle')
+apply from: file('publish-to-ossrh.gradle')
