@@ -28,11 +28,6 @@ def pomConfig = {
     }
 }
 
-java {
-    withJavadocJar()
-    withSourcesJar()
-}
-
 publishing {
     publications {
         library(MavenPublication) {
@@ -52,8 +47,8 @@ publishing {
 }
 
 bintray {
-    user = project.hasProperty('bintray.user') ? project.property('bintray.user') : System.getenv('BINTRAY_USER')
-    key = project.hasProperty('bintray.apikey') ? project.property('bintray.apikey') : System.getenv('BINTRAY_API_KEY')
+    user = prop('bintray.user', 'BINTRAY_USER')
+    key = prop('bintray.apikey', 'BINTRAY_API_KEY')
     publish = true
     publications = ['library']
     pkg {
@@ -73,7 +68,7 @@ bintray {
             released = new Date()
             gpg {
                 sign = true
-                passphrase = project.hasProperty('bintray.gpgpassphrase') ? project.property('bintray.gpgpassphrase') : System.getenv('BINTRAY_GPGPASSPHRASE')
+                passphrase = prop('signing.password', 'SIGNING_PASSWORD')
             }
         }
     }

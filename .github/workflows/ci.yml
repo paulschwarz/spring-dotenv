@@ -36,3 +36,5 @@ jobs:
         run: ./gradlew build --console=plain
         env:
           RELEASE_VERSION: ${{ steps.get_version.outputs.VERSION }}
+          SIGNING_PASSWORD: ${{ secrets.GPG_SECRET }}
+          SIGNING_KEY: ${{ secrets.GPG_PUBLIC_KEY_AMORED }}
