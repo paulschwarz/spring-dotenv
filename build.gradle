@@ -8,8 +8,11 @@ ext {
     dotenvVersion = '2.0.0'
 }
 
-def releaseVersion = project.hasProperty('release.version') ? project.property('release.version') : System.getenv('RELEASE_VERSION')
+def prop(propKey, envKey) {
+    return project.hasProperty(propKey) ? project.property(propKey) : System.getenv(envKey)
+}
 
+def releaseVersion = prop('release.version', 'RELEASE_VERSION')
 if (! releaseVersion) {
     throw new GradleException('You must specify "release.version" or "RELEASE_VERSION"')
 }
