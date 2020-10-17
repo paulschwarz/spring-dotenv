@@ -1,16 +1,12 @@
-# 🗝️ spring-dotenv 
-![CI](https://github.com/paulschwarz/spring-dotenv/workflows/CI/badge.svg)
-![CD](https://github.com/paulschwarz/spring-dotenv/workflows/CD/badge.svg)
-![Bintray](https://img.shields.io/bintray/v/paulschwarz/maven/spring-dotenv?color=blue) 
-![Maven Central](https://img.shields.io/maven-central/v/me.paulschwarz/spring-dotenv?color=blue)
-![GitHub](https://img.shields.io/github/license/paulschwarz/spring-dotenv?color=orange)
-![GitHub stars](https://img.shields.io/github/stars/paulschwarz/spring-dotenv?color=yellowgreen)
+# 🗝 spring-dotenv 
+[![CI](https://github.com/paulschwarz/spring-dotenv/workflows/CI/badge.svg)](https://github.com/paulschwarz/spring-dotenv/actions?query=workflow%3ACI)
+[![CD](https://github.com/paulschwarz/spring-dotenv/workflows/CD/badge.svg)](https://github.com/paulschwarz/spring-dotenv/actions?query=workflow%3ACD)
+[![Bintray](https://img.shields.io/bintray/v/paulschwarz/maven/spring-dotenv?color=blue)](https://bintray.com/paulschwarz/maven/spring-dotenv/_latestVersion)
+[![Maven Central](https://img.shields.io/maven-central/v/me.paulschwarz/spring-dotenv?color=blue)](https://search.maven.org/artifact/me.paulschwarz/spring-dotenv)
+[![GitHub](https://img.shields.io/github/license/paulschwarz/spring-dotenv?color=orange)](https://github.com/paulschwarz/spring-dotenv/blob/master/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/paulschwarz/spring-dotenv?color=yellowgreen)](https://github.com/paulschwarz/spring-dotenv/stargazers)
 
-<a href='https://bintray.com/paulschwarz/maven/spring-dotenv?source=watch'>
-  <img alt='Get automatic notifications about new "spring-dotenv" versions' src='https://www.bintray.com/docs/images/bintray_badge_bw.png'>
-</a>
-
-Provides a Spring [PropertySource](https://github.com/spring-projects/spring-framework/blob/v5.2.3.RELEASE/spring-core/src/main/java/org/springframework/core/env/PropertySource.java) that delegates to the excellent [java-dotenv](https://github.com/cdimascio/java-dotenv) library.
+Provides a Spring [PropertySource](https://github.com/spring-projects/spring-framework/blob/v5.2.3.RELEASE/spring-core/src/main/java/org/springframework/core/env/PropertySource.java) that delegates to the excellent [dotenv-java](https://github.com/cdimascio/dotenv-java) library.
 
 Storing [configuration in the environment](http://12factor.net/config) is one of the tenets of a [twelve-factor app](http://12factor.net). Anything that is likely to change between deployment environments – such as resource handles for databases or credentials for external services – should be extracted from the code into environment variables.
 
@@ -31,8 +27,10 @@ Loading environment variables from the .env is for your development convenience 
 
 It is common, however, to commit a .env.example file to source control which documents the available variables and gives developers an understanding of how to create their own local .env file.
 
-[Installation instructions here https://bintray.com/paulschwarz/maven/spring-dotenv](https://bintray.com/paulschwarz/maven/spring-dotenv)
+#### Maven and Gradle
 
+[*Installation instructions*](https://github.com/paulschwarz/spring-dotenv/releases/latest)
+    
 ## Usage
 
 Refer to the [demo application](application).
@@ -103,6 +101,6 @@ Please make sure to update tests as appropriate.
 ## Acknowledgements
 
 [Laravel Configuration](https://laravel.com/docs/master/configuration) for a great example of integrating dotenv with a framework.  
-The dotenv libraries for [Ruby](https://github.com/bkeepers/dotenv) and [Java](https://github.com/cdimascio/java-dotenv).    
+The dotenv libraries for [Ruby](https://github.com/bkeepers/dotenv) and [Java](https://github.com/cdimascio/dotenv-java).    
 Spring Boot's [RandomValuePropertySource](https://github.com/spring-projects/spring-boot/blob/v2.2.4.RELEASE/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/env/RandomValuePropertySource.java) for an example of a custom property source.  
 [Michał Bychawski](https://www.linkedin.com/in/michał-bychawski-541733aa) for help putting this together.  
