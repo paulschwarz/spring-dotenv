@@ -5,7 +5,7 @@ plugins {
 }
 
 ext {
-    dotenvVersion = '2.0.0'
+    dotenvVersion = '2.2.0'
 }
 
 def prop(propKey, envKey) {
