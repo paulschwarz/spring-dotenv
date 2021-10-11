@@ -38,5 +38,4 @@ test {
 	environment 'EXAMPLE_MESSAGE_3', 'Message 3 from system environment'
 }
 
-apply from: file('publish-to-bintray.gradle')
 apply from: file('publish-to-ossrh.gradle')

@@ -16,12 +16,16 @@ public class DotenvPropertySource extends PropertySource<DotenvPropertyLoader> {
 
   private static final String PREFIX = "env.";
 
-  public DotenvPropertySource(String name) {
-    super(name, new DotenvPropertyLoader());
+  public DotenvPropertySource(String name, DotenvConfig dotenvConfig) {
+    super(name, new DotenvPropertyLoader(dotenvConfig));
+  }
+
+  public DotenvPropertySource(DotenvConfig dotenvConfig) {
+    this(DOTENV_PROPERTY_SOURCE_NAME, dotenvConfig);
   }
 
   public DotenvPropertySource() {
-    this(DOTENV_PROPERTY_SOURCE_NAME);
+    this(new DotenvConfig(null));
   }
 
   /**
@@ -44,12 +48,15 @@ public class DotenvPropertySource extends PropertySource<DotenvPropertyLoader> {
   }
 
   public static void addToEnvironment(ConfigurableEnvironment environment) {
+    DotenvConfig dotenvConfig = new DotenvConfig(environment);
+    logger.info("Initializing Dotenv with " + dotenvConfig);
+
     environment
         .getPropertySources()
         .addAfter(
             StandardEnvironment.SYSTEM_ENVIRONMENT_PROPERTY_SOURCE_NAME,
-            new DotenvPropertySource(DOTENV_PROPERTY_SOURCE_NAME));
+            new DotenvPropertySource(dotenvConfig));
 
-    logger.trace("DotenvPropertySource add to Environment");
+    logger.trace("DotenvPropertySource added to Environment");
   }
 }

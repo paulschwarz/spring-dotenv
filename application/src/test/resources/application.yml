@@ -1,3 +1,10 @@
+#.env:
+#  directory: /some/path
+#  filename: .env
+#  ignoreIfMalformed: true
+#  ignoreIfMissing: false
+#  systemProperties: true
+
 example:
   name: ${env.EXAMPLE_NAME:World}
   value1: ${env.EXAMPLE_MESSAGE_1}

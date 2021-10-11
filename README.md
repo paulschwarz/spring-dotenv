@@ -88,6 +88,26 @@ Now set the variable in the environment and notice that it has higher precedence
 export EXAMPLE_NAME=World
 ```
 
+## Configuration (optional)
+
+This library supports the same configuration values as the underlying [dotenv-java configuration](https://github.com/cdimascio/dotenv-java#configuration-options). Configuration is completely optional, however if you need to override defaults, you may do so by adding the following to your application.yml (or .properties):
+
+```yaml
+.env:
+  directory: <string>
+  filename: <string>
+  ignoreIfMalformed: <boolean>
+  ignoreIfMissing: <boolean>
+  systemProperties: <boolean>
+```
+
+By default, this library sets `ignoreIfMissing` to `true`. You may change this behaviour as follows:
+
+```yaml
+.env:
+  ignoreIfMissing: false
+```
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

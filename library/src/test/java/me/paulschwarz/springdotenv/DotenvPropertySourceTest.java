@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 class DotenvPropertySourceTest {
 
-  private DotenvPropertySource source = new DotenvPropertySource();
+  private final DotenvPropertySource source = new DotenvPropertySource();
 
   @Test
   void irrelevant() {
