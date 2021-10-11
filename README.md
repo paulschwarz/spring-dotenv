@@ -1,7 +1,6 @@
 # 🗝 spring-dotenv 
 [![CI](https://github.com/paulschwarz/spring-dotenv/workflows/CI/badge.svg)](https://github.com/paulschwarz/spring-dotenv/actions?query=workflow%3ACI)
 [![CD](https://github.com/paulschwarz/spring-dotenv/workflows/CD/badge.svg)](https://github.com/paulschwarz/spring-dotenv/actions?query=workflow%3ACD)
-[![Bintray](https://img.shields.io/bintray/v/paulschwarz/maven/spring-dotenv?color=blue)](https://bintray.com/paulschwarz/maven/spring-dotenv/_latestVersion)
 [![Maven Central](https://img.shields.io/maven-central/v/me.paulschwarz/spring-dotenv?color=blue)](https://search.maven.org/artifact/me.paulschwarz/spring-dotenv)
 [![GitHub](https://img.shields.io/github/license/paulschwarz/spring-dotenv?color=orange)](https://github.com/paulschwarz/spring-dotenv/blob/master/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/paulschwarz/spring-dotenv?color=yellowgreen)](https://github.com/paulschwarz/spring-dotenv/stargazers)
@@ -106,6 +105,16 @@ By default, this library sets `ignoreIfMissing` to `true`. You may change this b
 ```yaml
 .env:
   ignoreIfMissing: false
+```
+
+If you prefer .properties files:
+
+```properties
+.env.directory: <string>
+.env.filename: <string>
+.env.ignoreIfMalformed: <boolean>
+.env.ignoreIfMissing: <boolean>
+.env.systemProperties: <boolean>
 ```
 
 ## Contributing
