@@ -26,6 +26,9 @@ class DemoApplicationTest {
     assertThat(fromValueAnnotation.getValue1()).isEqualTo("Message 1 from .env");
     assertThat(fromValueAnnotation.getValue2()).isEqualTo("Message 2 from system environment");
     assertThat(fromValueAnnotation.getValue3()).isEqualTo("Message 3 from system environment");
+    assertThat(fromValueAnnotation.getValue1v2()).isEqualTo("Message 1 from .env");
+    assertThat(fromValueAnnotation.getValue2v2()).isEqualTo("Message 2 from system environment");
+    assertThat(fromValueAnnotation.getValue3v2()).isEqualTo("Message 3 from system environment");
   }
 
   @Test

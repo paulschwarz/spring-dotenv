@@ -1,12 +1,13 @@
-#.env:
+.env:
 #  directory: /some/path
 #  filename: .env
 #  ignoreIfMalformed: true
 #  ignoreIfMissing: false
 #  systemProperties: true
+  prefixProperty: ""
 
 example:
-  name: ${env.EXAMPLE_NAME:World}
-  value1: ${env.EXAMPLE_MESSAGE_1}
-  value2: ${env.EXAMPLE_MESSAGE_2}
-  value3: ${env.EXAMPLE_MESSAGE_3}
+  name: ${EXAMPLE_NAME:World}
+  value1: ${EXAMPLE_MESSAGE_1}
+  value2: ${EXAMPLE_MESSAGE_2}
+  value3: ${EXAMPLE_MESSAGE_3}

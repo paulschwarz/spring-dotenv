@@ -1,9 +1,9 @@
-#.env:
+.env:
 #  directory: /some/path
 #  filename: .env
 #  ignoreIfMalformed: true
 #  ignoreIfMissing: false
 #  systemProperties: true
-
+  prefixProperty: ""
 example:
-  name: ${env.EXAMPLE_NAME:World}
+  name: ${EXAMPLE_NAME:World}

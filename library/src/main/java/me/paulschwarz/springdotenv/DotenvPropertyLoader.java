@@ -15,7 +15,6 @@ public class DotenvPropertyLoader {
     dotenvConfig.getIgnoreIfMalformedTruth().ifPresent(value -> dotenvBuilder.ignoreIfMalformed());
     dotenvConfig.getIgnoreIfMissingTruth().ifPresent(value -> dotenvBuilder.ignoreIfMissing());
     dotenvConfig.getSystemPropertiesTruth().ifPresent(value -> dotenvBuilder.systemProperties());
-
     dotenv = dotenvBuilder.load();
   }
 
