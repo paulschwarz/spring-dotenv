@@ -98,6 +98,7 @@ This library supports the same configuration values as the underlying [dotenv-ja
   ignoreIfMalformed: <boolean>
   ignoreIfMissing: <boolean>
   systemProperties: <boolean>
+  prefix: <string>
 ```
 
 By default, this library sets `ignoreIfMissing` to `true`. You may change this behaviour as follows:
@@ -105,6 +106,16 @@ By default, this library sets `ignoreIfMissing` to `true`. You may change this b
 ```yaml
 .env:
   ignoreIfMissing: false
+```
+
+This library expects properties to be prefixed with `env.` as follows. However, you may configure a different prefix.
+
+```yaml
+.env:
+  prefix: ""
+
+example:
+  name: ${EXAMPLE_NAME:World}
 ```
 
 If you prefer .properties files:
@@ -115,6 +126,7 @@ If you prefer .properties files:
 .env.ignoreIfMalformed: <boolean>
 .env.ignoreIfMissing: <boolean>
 .env.systemProperties: <boolean>
+.end.prefix: <string>
 ```
 
 ## Contributing

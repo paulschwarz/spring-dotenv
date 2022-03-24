@@ -25,12 +25,7 @@ public class DotenvPropertySource extends PropertySource<DotenvPropertyLoader> {
   public DotenvPropertySource(DotenvConfig dotenvConfig) {
     this(DOTENV_PROPERTY_SOURCE_NAME, dotenvConfig);
 
-    if (dotenvConfig.getPrefixPropertyOptional().isPresent()) {
-      this.prefix = dotenvConfig.getPrefixPropertyOptional().get();
-    }else {
-      this.prefix = DEFAULT_PREFIX;
-    }
-
+    this.prefix = dotenvConfig.getPrefixOptional().orElse(DEFAULT_PREFIX);
   }
 
   public DotenvPropertySource() {

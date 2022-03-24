@@ -3,8 +3,6 @@ package me.paulschwarz.springdotenv;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
@@ -23,7 +21,7 @@ class DotenvConfigTest {
     assertTrue(dotenvConfig.getIgnoreIfMissingTruth().isPresent());
     assertFalse(dotenvConfig.getSystemPropertiesTruth().isPresent());
     assertTrue(dotenvConfig.getIgnoreIfMissingTruth().get());
-    assertFalse(dotenvConfig.getPrefixPropertyOptional().isPresent());
+    assertFalse(dotenvConfig.getPrefixOptional().isPresent());
 
   }
 
@@ -35,7 +33,7 @@ class DotenvConfigTest {
     doReturn("true").when(environment).getProperty(".env.ignoreIfMalformed", "false");
     doReturn("false").when(environment).getProperty(".env.ignoreIfMissing", "true");
     doReturn("true").when(environment).getProperty(".env.systemProperties", "false");
-    doReturn("").when(environment).getProperty(".env.prefixProperty", (String) null);
+    doReturn("").when(environment).getProperty(".env.prefix", (String) null);
 
     DotenvConfig dotenvConfig = new DotenvConfig(environment);
 
@@ -44,13 +42,13 @@ class DotenvConfigTest {
     assertTrue(dotenvConfig.getIgnoreIfMalformedTruth().isPresent());
     assertFalse(dotenvConfig.getIgnoreIfMissingTruth().isPresent());
     assertTrue(dotenvConfig.getSystemPropertiesTruth().isPresent());
-    assertTrue(dotenvConfig.getPrefixPropertyOptional().isPresent());
+    assertTrue(dotenvConfig.getPrefixOptional().isPresent());
 
     assertEquals("/some/dir", dotenvConfig.getDirectoryOptional().get());
     assertEquals(".env", dotenvConfig.getFilenameOptional().get());
     assertTrue(dotenvConfig.getIgnoreIfMalformedTruth().get());
     assertTrue(dotenvConfig.getSystemPropertiesTruth().get());
 
-    assertEquals("", dotenvConfig.getPrefixPropertyOptional().get());
+    assertEquals("", dotenvConfig.getPrefixOptional().get());
   }
 }

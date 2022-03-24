@@ -6,26 +6,21 @@ import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.env.ConfigurableEnvironment;
 
 class DotenvPropertySourceEnvironmentTest {
 
   private ConfigurableEnvironment configurableEnvironment;
 
-
   private DotenvPropertySource source;
 
   @BeforeEach
-  void init(){
+  void init() {
     configurableEnvironment = mock(ConfigurableEnvironment.class);
-    doReturn("").when(configurableEnvironment).getProperty(".env.prefixProperty", (String)null);
+    doReturn("").when(configurableEnvironment).getProperty(".env.prefix", (String) null);
     source = new DotenvPropertySource(new DotenvConfig(configurableEnvironment));
   }
+
   @Test
   void irrelevant() {
     assertThat(source.getProperty("other.VALUE")).isNull();

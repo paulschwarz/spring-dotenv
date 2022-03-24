@@ -13,7 +13,7 @@ public class DotenvConfig {
   private Boolean ignoreIfMalformed;
   private Boolean ignoreIfMissing = true;
   private Boolean systemProperties;
-  private String prefixProperty;
+  private String prefix;
 
   public DotenvConfig(ConfigurableEnvironment environment) {
     directory = getEnvironmentProperty(environment, "directory", directory);
@@ -21,7 +21,7 @@ public class DotenvConfig {
     ignoreIfMalformed = getEnvironmentProperty(environment, "ignoreIfMalformed", ignoreIfMalformed);
     ignoreIfMissing = getEnvironmentProperty(environment, "ignoreIfMissing", ignoreIfMissing);
     systemProperties = getEnvironmentProperty(environment, "systemProperties", systemProperties);
-    prefixProperty = getEnvironmentProperty(environment, "prefixProperty", prefixProperty);
+    prefix = getEnvironmentProperty(environment, "prefix", prefix);
   }
 
   private String getEnvironmentProperty(ConfigurableEnvironment environment, String key, String defaultValue) {
@@ -46,8 +46,8 @@ public class DotenvConfig {
     return Optional.ofNullable(filename);
   }
 
-  public Optional<String> getPrefixPropertyOptional() {
-    return Optional.ofNullable(prefixProperty);
+  public Optional<String> getPrefixOptional() {
+    return Optional.ofNullable(prefix);
   }
 
   public Optional<Boolean> getIgnoreIfMalformedTruth() {
@@ -73,7 +73,7 @@ public class DotenvConfig {
         ", ignoreIfMalformed=" + ignoreIfMalformed +
         ", ignoreIfMissing=" + ignoreIfMissing +
         ", systemProperties=" + systemProperties +
-        ", prefixProperty=" + prefixProperty +
+        ", prefix=" + prefix +
         '}';
   }
 }
