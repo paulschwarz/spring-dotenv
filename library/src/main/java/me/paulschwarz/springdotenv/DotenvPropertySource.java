@@ -14,7 +14,9 @@ public class DotenvPropertySource extends PropertySource<DotenvPropertyLoader> {
   /** Name of the env {@link PropertySource}. */
   public static final String DOTENV_PROPERTY_SOURCE_NAME = "env";
 
-  private static final String PREFIX = "env.";
+  private static final String DEFAULT_PREFIX = "env.";
+
+  private String prefix;
 
   public DotenvPropertySource(String name, DotenvConfig dotenvConfig) {
     super(name, new DotenvPropertyLoader(dotenvConfig));
@@ -22,6 +24,13 @@ public class DotenvPropertySource extends PropertySource<DotenvPropertyLoader> {
 
   public DotenvPropertySource(DotenvConfig dotenvConfig) {
     this(DOTENV_PROPERTY_SOURCE_NAME, dotenvConfig);
+
+    if (dotenvConfig.getPrefixPropertyOptional().isPresent()) {
+      this.prefix = dotenvConfig.getPrefixPropertyOptional().get();
+    }else {
+      this.prefix = DEFAULT_PREFIX;
+    }
+
   }
 
   public DotenvPropertySource() {
@@ -36,7 +45,7 @@ public class DotenvPropertySource extends PropertySource<DotenvPropertyLoader> {
    */
   @Override
   public Object getProperty(String name) {
-    if (!name.startsWith(PREFIX)) {
+    if (!name.startsWith(prefix)) {
       return null;
     }
 
@@ -44,7 +53,7 @@ public class DotenvPropertySource extends PropertySource<DotenvPropertyLoader> {
       logger.trace("Getting env property for '" + name + "'");
     }
 
-    return getSource().getValue(name.substring(PREFIX.length()));
+    return getSource().getValue(name.substring(prefix.length()));
   }
 
   public static void addToEnvironment(ConfigurableEnvironment environment) {
