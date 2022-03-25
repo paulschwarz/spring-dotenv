@@ -126,7 +126,7 @@ If you prefer .properties files:
 .env.ignoreIfMalformed: <boolean>
 .env.ignoreIfMissing: <boolean>
 .env.systemProperties: <boolean>
-.end.prefix: <string>
+.env.prefix: <string>
 ```
 
 ## Contributing
