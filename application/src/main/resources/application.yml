@@ -4,6 +4,7 @@
 #  ignoreIfMalformed: true
 #  ignoreIfMissing: false
 #  systemProperties: true
-  prefixProperty: ""
+  prefix: ""
+
 example:
   name: ${EXAMPLE_NAME:World}
