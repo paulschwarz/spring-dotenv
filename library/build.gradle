@@ -1,41 +1,43 @@
 plugins {
-	id 'org.springframework.boot'
-	id 'io.spring.dependency-management'
-	id 'java-library'
+    id 'java-library'
 }
 
 description = 'Provides a Dotenv property source for Spring'
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
-ext {
-	url = 'https://github.com/paulschwarz/spring-dotenv'
-}
 
-bootJar {
-	enabled = false
+ext {
+    url = 'https://github.com/paulschwarz/spring-dotenv'
+    dotenvVersion = '2.2.3'
+    springVersion = '5.3.19'
 }
 
 jar {
-	enabled = true
+    enabled = true
 }
 
 java {
-	withJavadocJar()
-	withSourcesJar()
+    withJavadocJar()
+    withSourcesJar()
 }
 
 dependencies {
-	implementation "io.github.cdimascio:dotenv-java:$dotenvVersion"
-	compileOnly 'org.springframework.boot:spring-boot-starter'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
+    implementation "io.github.cdimascio:dotenv-java:$dotenvVersion"
+
+    compileOnly "org.springframework:spring-context:$springVersion"
+    compileOnly "org.springframework:spring-core:$springVersion"
+
+    testImplementation "org.springframework:spring-core:$springVersion"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    testImplementation 'org.mockito:mockito-core:4.4.0'
+    testImplementation 'org.assertj:assertj-core:3.22.0'
 }
 
 test {
-	useJUnitPlatform()
-	environment 'EXAMPLE_MESSAGE_2', 'Message 2 from system environment'
-	environment 'EXAMPLE_MESSAGE_3', 'Message 3 from system environment'
+    useJUnitPlatform()
+    environment 'EXAMPLE_MESSAGE_2', 'Message 2 from system environment'
+    environment 'EXAMPLE_MESSAGE_3', 'Message 3 from system environment'
 }
 
 apply from: file('publish-to-ossrh.gradle')

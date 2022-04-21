@@ -1,12 +1,3 @@
-plugins {
-    id 'org.springframework.boot' version '2.6.6'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-}
-
-ext {
-    dotenvVersion = '2.2.3'
-}
-
 def prop(propKey, envKey) {
     return project.hasProperty(propKey) ? project.property(propKey) : System.getenv(envKey)
 }
