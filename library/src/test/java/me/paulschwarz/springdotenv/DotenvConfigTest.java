@@ -28,7 +28,8 @@ class DotenvConfigTest {
   @Test
   void withValues() {
     ConfigurableEnvironment environment = mock(ConfigurableEnvironment.class);
-    doReturn("/some/dir").when(environment).getProperty(".env.directory", (String) null);
+
+    doReturn("./some/path").when(environment).getProperty(".env.directory", (String) null);
     doReturn(".env").when(environment).getProperty(".env.filename", (String) null);
     doReturn("true").when(environment).getProperty(".env.ignoreIfMalformed", "false");
     doReturn("false").when(environment).getProperty(".env.ignoreIfMissing", "true");
@@ -44,7 +45,7 @@ class DotenvConfigTest {
     assertTrue(dotenvConfig.getSystemPropertiesTruth().isPresent());
     assertTrue(dotenvConfig.getPrefixOptional().isPresent());
 
-    assertEquals("/some/dir", dotenvConfig.getDirectoryOptional().get());
+    assertEquals("./some/path", dotenvConfig.getDirectoryOptional().get());
     assertEquals(".env", dotenvConfig.getFilenameOptional().get());
     assertTrue(dotenvConfig.getIgnoreIfMalformedTruth().get());
     assertTrue(dotenvConfig.getSystemPropertiesTruth().get());

@@ -1,9 +1,10 @@
 .env:
-#  directory: /some/path
+#  directory: ./some/path
 #  filename: .env
 #  ignoreIfMalformed: true
 #  ignoreIfMissing: false
 #  systemProperties: true
+  directory: "./some/path"
   prefix: ""
 
 example:

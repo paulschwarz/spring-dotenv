@@ -1,5 +1,5 @@
 .env:
-#  directory: /some/path
+#  directory: ./some/path
 #  filename: .env
 #  ignoreIfMalformed: true
 #  ignoreIfMissing: false

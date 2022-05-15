@@ -10,13 +10,11 @@ import org.springframework.core.env.ConfigurableEnvironment;
 
 class DotenvPropertySourceEnvironmentTest {
 
-  private ConfigurableEnvironment configurableEnvironment;
-
   private DotenvPropertySource source;
 
   @BeforeEach
   void init() {
-    configurableEnvironment = mock(ConfigurableEnvironment.class);
+    ConfigurableEnvironment configurableEnvironment = mock(ConfigurableEnvironment.class);
     doReturn("").when(configurableEnvironment).getProperty(".env.prefix", (String) null);
     source = new DotenvPropertySource(new DotenvConfig(configurableEnvironment));
   }
@@ -40,7 +38,6 @@ class DotenvPropertySourceEnvironmentTest {
   void givenPrefixEnv_valueIsNull() {
     assertThat(source.getProperty("env.EXAMPLE_MESSAGE_1")).isNull();
   }
-
 
   @Test
   void valueFromEnvironment() {
