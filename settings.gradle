@@ -4,3 +4,4 @@ include 'library'
 include 'application'
 
 project(':library').name = 'spring-dotenv'
+project(':application').projectDir = new File(settingsDir, 'examples/application')
