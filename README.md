@@ -32,7 +32,7 @@ It is common, however, to commit a .env.example file to source control which doc
     
 ## Usage
 
-Refer to the [demo application](application).
+Refer to the [demo application](examples/application).
 
 Imagine a simple application which outputs "Hello, `example.name`". We can use Spring to load the property `example.name` from an application.properties file or an application.yml file.
 
