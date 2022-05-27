@@ -1,0 +1,36 @@
+{
+  "properties": [
+    {
+      "name": ".env.directory",
+      "type": "java.lang.String",
+      "description": "Specifies the directory containing .env."
+    },
+    {
+      "name": ".env.filename",
+      "type": "java.lang.String",
+      "description": "Use a filename other than .env.",
+      "defaultValue": ".env"
+    },
+    {
+      "name": ".env.ignoreIfMalformed",
+      "type": "java.lang.Boolean",
+      "description": "Do not throw when .env entries are malformed. Malformed entries are skipped."
+    },
+    {
+      "name": ".env.ignoreIfMissing",
+      "type": "java.lang.Boolean",
+      "description": "Do not throw when .env does not exist."
+    },
+    {
+      "name": ".env.systemProperties",
+      "type": "java.lang.Boolean",
+      "description": "Load environment variables into System properties, thus making all environment variables accessible via System.getProperty(...)."
+    },
+    {
+      "name": ".env.prefix",
+      "type": "java.lang.String",
+      "description": "Specify the prefix to be used when access .env.",
+      "defaultValue": "env"
+    }
+  ]
+}
