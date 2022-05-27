@@ -3,12 +3,12 @@
     {
       "name": ".env.directory",
       "type": "java.lang.String",
-      "description": "Specifies the directory containing .env."
+      "description": "Specify the directory containing your .env file."
     },
     {
       "name": ".env.filename",
       "type": "java.lang.String",
-      "description": "Use a filename other than .env.",
+      "description": "Specify a filename other than the .env default name.",
       "defaultValue": ".env"
     },
     {
@@ -32,8 +32,8 @@
     {
       "name": ".env.prefix",
       "type": "java.lang.String",
-      "description": "Specify the prefix to be used when access .env.",
-      "defaultValue": "env"
+      "description": "Specify the prefix for Spring properties to make use of the .env property source.",
+      "defaultValue": "env."
     }
   ]
 }
