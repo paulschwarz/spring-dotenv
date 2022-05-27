@@ -14,17 +14,20 @@
     {
       "name": ".env.ignoreIfMalformed",
       "type": "java.lang.Boolean",
-      "description": "Do not throw when .env entries are malformed. Malformed entries are skipped."
+      "description": "Do not throw when .env entries are malformed. Malformed entries are skipped.",
+      "defaultValue": false
     },
     {
       "name": ".env.ignoreIfMissing",
       "type": "java.lang.Boolean",
-      "description": "Do not throw when .env does not exist."
+      "description": "Do not throw when .env does not exist.",
+      "defaultValue": true
     },
     {
       "name": ".env.systemProperties",
       "type": "java.lang.Boolean",
-      "description": "Load environment variables into System properties, thus making all environment variables accessible via System.getProperty(...)."
+      "description": "Load environment variables into System properties, thus making all environment variables accessible via System.getProperty(...).",
+      "defaultValue": false
     },
     {
       "name": ".env.prefix",
