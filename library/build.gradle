@@ -2,14 +2,15 @@ plugins {
     id 'java-library'
 }
 
-description = 'Provides a Dotenv property source for Spring'
+description = 'Provides a Dotenv property source for Spring and Spring Boot'
+
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 ext {
     url = 'https://github.com/paulschwarz/spring-dotenv'
-    dotenvVersion = '2.2.3'
-    springVersion = '5.3.19'
+    dotenvVersion = '2.2.4'
+    springVersion = '5.3.23'
 }
 
 jar {
@@ -23,15 +24,17 @@ java {
 
 dependencies {
     implementation "io.github.cdimascio:dotenv-java:$dotenvVersion"
-
+    compileOnly "org.springframework.boot:spring-boot-autoconfigure:2.7.5"
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+    compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+    compileOnly "org.springframework:spring-webmvc:$springVersion"
     compileOnly "org.springframework:spring-context:$springVersion"
-    compileOnly "org.springframework:spring-core:$springVersion"
 
     testImplementation "org.springframework:spring-core:$springVersion"
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-    testImplementation 'org.mockito:mockito-core:4.4.0'
-    testImplementation 'org.assertj:assertj-core:3.22.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+    testImplementation 'org.mockito:mockito-core:4.8.0'
+    testImplementation 'org.assertj:assertj-core:3.23.1'
 }
 
 test {
@@ -40,4 +43,4 @@ test {
     environment 'EXAMPLE_MESSAGE_3', 'Message 3 from system environment'
 }
 
-apply from: file('publish-to-ossrh.gradle')
+apply from: rootProject.file('gradle/publish-to-ossrh.gradle')

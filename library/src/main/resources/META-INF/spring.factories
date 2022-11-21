@@ -1,1 +1,1 @@
-org.springframework.context.ApplicationContextInitializer=me.paulschwarz.springdotenv.DotenvApplicationInitializer
+org.springframework.boot.SpringApplicationRunListener=me.paulschwarz.springdotenv.springboot.DotenvApplicationRunListener

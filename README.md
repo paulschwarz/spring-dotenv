@@ -145,3 +145,4 @@ Please make sure to update tests as appropriate.
 The dotenv libraries for [Ruby](https://github.com/bkeepers/dotenv) and [Java](https://github.com/cdimascio/dotenv-java).    
 Spring Boot's [RandomValuePropertySource](https://github.com/spring-projects/spring-boot/blob/v2.2.4.RELEASE/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/env/RandomValuePropertySource.java) for an example of a custom property source.  
 [Michał Bychawski](https://www.linkedin.com/in/michał-bychawski-541733aa) for help putting this together.  
+[Dan Zheng](https://github.com/clevertension) for contributing sample applications.
