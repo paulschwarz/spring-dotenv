@@ -1,0 +1,24 @@
+plugins {
+	id 'java'
+	id 'org.gretty' version '3.1.0'
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+jar {
+	enabled = false
+}
+
+gretty {
+	httpPort = 8080
+}
+
+dependencies {
+	implementation project(':spring-dotenv')
+	implementation platform('org.springframework:spring-framework-bom:5.3.24')
+	implementation 'org.springframework:spring-webmvc'
+	implementation 'org.slf4j:slf4j-api:2.0.3'
+	runtimeOnly 'org.apache.logging.log4j:log4j-slf4j2-impl:2.19.0'
+	runtimeOnly 'org.apache.logging.log4j:log4j-core:2.19.0'
+}

@@ -1,12 +1,10 @@
 package me.paulschwarz.springdotenv;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 
+import java.util.Properties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.core.env.ConfigurableEnvironment;
 
 class DotenvPropertySourceEnvironmentTest {
 
@@ -14,9 +12,7 @@ class DotenvPropertySourceEnvironmentTest {
 
   @BeforeEach
   void init() {
-    ConfigurableEnvironment configurableEnvironment = mock(ConfigurableEnvironment.class);
-    doReturn("").when(configurableEnvironment).getProperty(".env.prefix", (String) null);
-    source = new DotenvPropertySource(new DotenvConfig(configurableEnvironment));
+    source = new DotenvPropertySource(new DotenvConfig(new Properties()));
   }
 
   @Test

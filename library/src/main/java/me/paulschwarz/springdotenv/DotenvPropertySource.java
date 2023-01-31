@@ -1,20 +1,25 @@
 package me.paulschwarz.springdotenv;
 
+import java.util.Objects;
+import java.util.Optional;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.PropertyResolver;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.env.StandardEnvironment;
+import org.springframework.core.log.LogMessage;
 
 public class DotenvPropertySource extends PropertySource<DotenvPropertyLoader> {
 
-  private static final Log logger = LogFactory.getLog(DotenvPropertySource.class);
+  private static final Log log = LogFactory.getLog(DotenvPropertySource.class);
 
-  /** Name of the env {@link PropertySource}. */
+  /**
+   * Name of the env {@link PropertySource}.
+   */
   public static final String DOTENV_PROPERTY_SOURCE_NAME = "env";
 
-  private static final String DEFAULT_PREFIX = "env.";
+  private static final String DEFAULT_PREFIX = "";
 
   private String prefix;
 
@@ -25,11 +30,20 @@ public class DotenvPropertySource extends PropertySource<DotenvPropertyLoader> {
   public DotenvPropertySource(DotenvConfig dotenvConfig) {
     this(DOTENV_PROPERTY_SOURCE_NAME, dotenvConfig);
 
-    this.prefix = dotenvConfig.getPrefixOptional().orElse(DEFAULT_PREFIX);
-  }
+    prefix = Optional.ofNullable(dotenvConfig.getPrefix()).orElse(DEFAULT_PREFIX);
 
-  public DotenvPropertySource() {
-    this(new DotenvConfig(null));
+    if (!"".equals(prefix)) {
+      LogMessage warning = LogMessage.format("spring-dotenv: Using a prefix is DEPRECATED as of spring-dotenv version 3.%n" +
+          "spring-dotenv: You are using the prefix \"%1$s\".%n" +
+          "spring-dotenv: Please convert all usages of ${%1$sEXAMPLE} to ${EXAMPLE} " +
+          "and remove prefix=%1$s from your .env.properties file.", prefix);
+
+      if (dotenvConfig.suppressPrefixDeprecationWarning()) {
+        log.warn(warning);
+      } else {
+        System.err.println(warning);
+      }
+    }
   }
 
   /**
@@ -44,23 +58,28 @@ public class DotenvPropertySource extends PropertySource<DotenvPropertyLoader> {
       return null;
     }
 
-    if (logger.isTraceEnabled()) {
-      logger.trace("Getting env property for '" + name + "'");
+    Object value = getSource().getValue(name.substring(prefix.length()));
+
+    if (Objects.nonNull(value)) {
+      log.trace(LogMessage.format("Got env property for \"%s\"", name));
     }
 
-    return getSource().getValue(name.substring(prefix.length()));
+    return value;
   }
 
   public static void addToEnvironment(ConfigurableEnvironment environment) {
-    DotenvConfig dotenvConfig = new DotenvConfig(environment);
-    logger.info("Initializing Dotenv with " + dotenvConfig);
+    DotenvConfig dotenvConfig = new DotenvConfig(DotenvConfigProperties.loadProperties());
+    DotenvPropertySource dotenvPropertySource = new DotenvPropertySource(dotenvConfig);
 
-    environment
-        .getPropertySources()
-        .addAfter(
-            StandardEnvironment.SYSTEM_ENVIRONMENT_PROPERTY_SOURCE_NAME,
-            new DotenvPropertySource(dotenvConfig));
+    log.info(LogMessage.format("Initialized Dotenv with %s", dotenvConfig));
 
-    logger.trace("DotenvPropertySource added to Environment");
+    if (dotenvConfig.systemProperties()) {
+      log.trace("Dotenv environment available as system properties");
+    } else {
+      environment.getPropertySources()
+          .addAfter(StandardEnvironment.SYSTEM_ENVIRONMENT_PROPERTY_SOURCE_NAME, dotenvPropertySource);
+
+      log.trace("DotenvPropertySource added to Environment");
+    }
   }
 }

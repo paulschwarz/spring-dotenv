@@ -2,6 +2,7 @@ package me.paulschwarz.springdotenv;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import io.github.cdimascio.dotenv.DotenvBuilder;
+import java.util.Optional;
 
 public class DotenvPropertyLoader {
 
@@ -10,11 +11,20 @@ public class DotenvPropertyLoader {
   public DotenvPropertyLoader(DotenvConfig dotenvConfig) {
     DotenvBuilder dotenvBuilder = Dotenv.configure();
 
-    dotenvConfig.getDirectoryOptional().ifPresent(dotenvBuilder::directory);
-    dotenvConfig.getFilenameOptional().ifPresent(dotenvBuilder::filename);
-    dotenvConfig.getIgnoreIfMalformedTruth().ifPresent(value -> dotenvBuilder.ignoreIfMalformed());
-    dotenvConfig.getIgnoreIfMissingTruth().ifPresent(value -> dotenvBuilder.ignoreIfMissing());
-    dotenvConfig.getSystemPropertiesTruth().ifPresent(value -> dotenvBuilder.systemProperties());
+    Optional.ofNullable(dotenvConfig.getDirectory()).ifPresent(dotenvBuilder::directory);
+    Optional.ofNullable(dotenvConfig.getFilename()).ifPresent(dotenvBuilder::filename);
+
+    if (dotenvConfig.ignoreIfMalformed()) {
+      dotenvBuilder.ignoreIfMalformed();
+    }
+
+    if (dotenvConfig.ignoreIfMissing()) {
+      dotenvBuilder.ignoreIfMissing();
+    }
+
+    if (dotenvConfig.systemProperties()) {
+      dotenvBuilder.systemProperties();
+    }
 
     dotenv = dotenvBuilder.load();
   }

@@ -1,0 +1,33 @@
+<web-app>
+  <display-name>Example Spring Web Application</display-name>
+
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
+  <!-- Option 1 -->
+  <listener>
+    <listener-class>me.paulschwarz.springdotenv.spring.DotenvJakartaApplicationListener</listener-class>
+  </listener>
+
+  <servlet>
+    <servlet-name>dispatcher</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/applicationContext.xml</param-value>
+    </init-param>
+
+    <!-- Option 2 -->
+    <!--    <init-param>-->
+    <!--      <param-name>contextInitializerClasses</param-name>-->
+    <!--      <param-value>me.paulschwarz.springdotenv.spring.DotenvApplicationInitializer</param-value>-->
+    <!--    </init-param>-->
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>dispatcher</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+</web-app>

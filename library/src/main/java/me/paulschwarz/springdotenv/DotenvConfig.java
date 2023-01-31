@@ -1,75 +1,74 @@
 package me.paulschwarz.springdotenv;
 
-import java.util.Objects;
-import java.util.Optional;
-import org.springframework.core.env.ConfigurableEnvironment;
+import java.util.Properties;
 
 public class DotenvConfig {
 
-  private static final String CONFIG_PREFIX = ".env.";
+  private final String prefix;
+  private final String directory;
+  private final String filename;
+  private final boolean ignoreIfMalformed;
+  private final boolean ignoreIfMissing;
+  private final boolean systemProperties;
+  private final boolean suppressPrefixDeprecationWarning;
 
-  private String directory;
-  private String filename;
-  private Boolean ignoreIfMalformed;
-  private Boolean ignoreIfMissing = true;
-  private Boolean systemProperties;
-  private String prefix;
-
-  public DotenvConfig(ConfigurableEnvironment environment) {
-    directory = getEnvironmentProperty(environment, "directory", directory);
-    filename = getEnvironmentProperty(environment, "filename", filename);
-    ignoreIfMalformed = getEnvironmentProperty(environment, "ignoreIfMalformed", ignoreIfMalformed);
-    ignoreIfMissing = getEnvironmentProperty(environment, "ignoreIfMissing", ignoreIfMissing);
-    systemProperties = getEnvironmentProperty(environment, "systemProperties", systemProperties);
-    prefix = getEnvironmentProperty(environment, "prefix", prefix);
+  public DotenvConfig(Properties propertiesFile) {
+    prefix = getStringProperty(propertiesFile, "prefix");
+    directory = getStringProperty(propertiesFile, "directory");
+    filename = getStringProperty(propertiesFile, "filename");
+    ignoreIfMalformed = getBooleanProperty(propertiesFile, "ignoreIfMalformed", false);
+    ignoreIfMissing = getBooleanProperty(propertiesFile, "ignoreIfMissing", true);
+    systemProperties = getBooleanProperty(propertiesFile, "systemProperties", false);
+    suppressPrefixDeprecationWarning = getBooleanProperty(propertiesFile, "suppressPrefixDeprecationWarning", false);
   }
 
-  private String getEnvironmentProperty(ConfigurableEnvironment environment, String key, String defaultValue) {
-    if (Objects.isNull(environment)) {
-      return defaultValue;
+  private static String getStringProperty(Properties propertiesFile, String key) {
+    String value = propertiesFile.getProperty(key);
+
+    if ("\"\"".equals(value)) {
+      return "";
     }
 
-    return environment.getProperty(CONFIG_PREFIX + key, defaultValue);
+    return value;
   }
 
-  private boolean getEnvironmentProperty(ConfigurableEnvironment environment, String key, Boolean defaultValue) {
-    String defaultValueAsString = String.valueOf(defaultValue != null && defaultValue);
-    String valueAsString = getEnvironmentProperty(environment, key, defaultValueAsString);
-    return Boolean.parseBoolean(valueAsString);
+  private static boolean getBooleanProperty(Properties propertiesFile, String key, boolean defaultValue) {
+    return Boolean.parseBoolean(propertiesFile.getProperty(key, String.valueOf(defaultValue)));
   }
 
-  public Optional<String> getDirectoryOptional() {
-    return Optional.ofNullable(directory);
+  public String getDirectory() {
+    return directory;
   }
 
-  public Optional<String> getFilenameOptional() {
-    return Optional.ofNullable(filename);
+  public String getFilename() {
+    return filename;
   }
 
-  public Optional<String> getPrefixOptional() {
-    return Optional.ofNullable(prefix);
+  public String getPrefix() {
+    return prefix;
   }
 
-  public Optional<Boolean> getIgnoreIfMalformedTruth() {
-    return Optional.ofNullable(ignoreIfMalformed)
-        .filter(Boolean::booleanValue);
+  public boolean ignoreIfMalformed() {
+    return ignoreIfMalformed;
   }
 
-  public Optional<Boolean> getIgnoreIfMissingTruth() {
-    return Optional.ofNullable(ignoreIfMissing)
-        .filter(Boolean::booleanValue);
+  public boolean ignoreIfMissing() {
+    return ignoreIfMissing;
   }
 
-  public Optional<Boolean> getSystemPropertiesTruth() {
-    return Optional.ofNullable(systemProperties)
-        .filter(Boolean::booleanValue);
+  public boolean systemProperties() {
+    return systemProperties;
+  }
+
+  public boolean suppressPrefixDeprecationWarning() {
+    return suppressPrefixDeprecationWarning;
   }
 
   @Override
   public String toString() {
     return "DotenvConfig{" +
-        "directory=" + getDirectoryOptional().map(value -> "'" + value + "'").orElse("null") +
-        ", filename=" + getFilenameOptional().map(value -> "'" + value + "'").orElse("null") +
+        "directory=" + directory +
+        ", filename=" + filename +
         ", ignoreIfMalformed=" + ignoreIfMalformed +
         ", ignoreIfMissing=" + ignoreIfMissing +
         ", systemProperties=" + systemProperties +
