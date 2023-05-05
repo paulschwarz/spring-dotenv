@@ -19,6 +19,10 @@ It is not always practical to set environment variables on development machines 
 
 ## Installation
 
+The current version requires JDK 11 or newer.
+If you your project depends on an older JDK, use
+[spring-dotenv 3.0.0](https://github.com/paulschwarz/spring-dotenv/releases/tag/v3.0.0).
+
 ### ... but first!
 
 Add this to .gitignore
