@@ -1,5 +1,6 @@
 plugins {
 	id 'application'
+	id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
 
 mainClassName = 'example.SpringDemoApplication'
@@ -7,7 +8,15 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 jar {
-	enabled = false
+	enabled = true
+}
+
+shadowJar {
+	baseName = 'spring-app-example'
+	version = prop('release.version', 'RELEASE_VERSION')
+	manifest {
+		attributes 'Main-Class': 'examples.SpringAppDemoApplication'
+	}
 }
 
 dependencies {
