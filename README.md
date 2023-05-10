@@ -137,6 +137,15 @@ Prior to version 3, the library expected properties to be prefixed with `env.`. 
 prefix=env.
 ```
 
+## Building spring-dotenv
+
+Inside a terminal at the project root directory, type the following command.
+Set the release version as you wish (if you are creating a new release) or based on the latest version in GitHub.
+
+```shell
+RELEASE_VERSION=0.0.0 ./gradlew build
+```
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
