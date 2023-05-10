@@ -12,7 +12,6 @@ jar {
 }
 
 shadowJar {
-	baseName = 'spring-app-example'
 	version = prop('release.version', 'RELEASE_VERSION')
 	manifest {
 		attributes 'Main-Class': 'examples.SpringAppDemoApplication'
