@@ -19,6 +19,10 @@ It is not always practical to set environment variables on development machines 
 
 ## Installation
 
+The current version requires JDK 11 or newer.
+If you your project depends on an older JDK, use
+[spring-dotenv 3.0.0](https://github.com/paulschwarz/spring-dotenv/releases/tag/v3.0.0).
+
 ### ... but first!
 
 Add this to .gitignore
@@ -131,6 +135,15 @@ Prior to version 3, the library expected properties to be prefixed with `env.`. 
 
 ```properties
 prefix=env.
+```
+
+## Building spring-dotenv
+
+Inside a terminal at the project root directory, type the following command.
+Set the release version as you wish (if you are creating a new release) or based on the latest version in GitHub.
+
+```shell
+RELEASE_VERSION=0.0.0 ./gradlew build
 ```
 
 ## Contributing

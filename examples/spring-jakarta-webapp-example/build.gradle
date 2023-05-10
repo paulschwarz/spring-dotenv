@@ -3,8 +3,8 @@ plugins {
 	id 'org.gretty' version '4.0.3'
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
 
 jar {
 	enabled = false
@@ -18,7 +18,7 @@ dependencies {
 	implementation project(':spring-dotenv')
 	implementation platform('org.springframework:spring-framework-bom:5.3.24')
 	implementation 'org.springframework:spring-webmvc'
-	implementation 'org.slf4j:slf4j-api:2.0.3'
-	runtimeOnly 'org.apache.logging.log4j:log4j-slf4j2-impl:2.19.0'
-	runtimeOnly 'org.apache.logging.log4j:log4j-core:2.19.0'
+	implementation 'org.slf4j:slf4j-api:2.0.7'
+	runtimeOnly 'org.apache.logging.log4j:log4j-slf4j2-impl:2.20.0'
+	runtimeOnly 'org.apache.logging.log4j:log4j-core:2.20.0'
 }
