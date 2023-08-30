@@ -113,7 +113,7 @@ export EXAMPLE_NAME=World
 
 ## Configuration (optional)
 
-This library supports the same configuration values as the underlying [dotenv-java configuration](https://github.com/cdimascio/dotenv-java#configuration-options). Configuration is completely optional, however if you need to override defaults, you may do so by adding the following to **.env.properties**:
+This library supports the same configuration values as the underlying [dotenv-java configuration](https://github.com/cdimascio/dotenv-java#configuration-options). Configuration is completely optional, however if you need to override defaults, you may do so by adding the following to **/src/main/resources/.env.properties**:
 
 ```properties
 directory=<string>
@@ -123,6 +123,8 @@ ignoreIfMissing=<boolean>
 systemProperties=<boolean>
 prefix=<string>
 ```
+
+`directory` can be practical when you are using mono repo, then you have to define the folder name with spring project. 
 
 By default, this library sets `ignoreIfMissing` to `true`. You may change this behaviour as follows:
 
