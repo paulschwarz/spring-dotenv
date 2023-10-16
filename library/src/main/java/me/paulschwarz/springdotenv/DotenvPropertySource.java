@@ -48,6 +48,14 @@ public class DotenvPropertySource extends PropertySource<DotenvPropertyLoader> {
 
   /**
    * Return the value associated with the given name, or {@code null} if not found.
+   * Handles Spring Boot relaxed binding by allowing multiple naming conventions
+   * for the property name (omitting the preifx):
+   * <ul>
+   *   <li>requested name</li>
+   *   <li>requested name replacing dots, dashes or both by underscores</li>
+   *   <li>requested name in uppercase</li>
+   *   <li>requested name in uppercase replacing dots, dashes or both by underscores</li>
+   * </ul>
    *
    * @param name the property to find
    * @see PropertyResolver#getRequiredProperty(String)
@@ -58,13 +66,61 @@ public class DotenvPropertySource extends PropertySource<DotenvPropertyLoader> {
       return null;
     }
 
-    Object value = getSource().getValue(name.substring(prefix.length()));
+    String noPrefix = name.substring(prefix.length());
 
-    if (Objects.nonNull(value)) {
+    String actualName = resolvePropertyName(noPrefix);
+    if (log.isTraceEnabled() && !name.equals(actualName)) {
+      logger.trace(LogMessage.format("PropertySource \"%s\" does not contain " +
+          "property \"%s\", but found equivalent \"%s\"", getName(), name, actualName));
+    }
+    Object value = getSource().getValue(actualName);
+
+    if (Objects.nonNull(value) && log.isTraceEnabled()) {
       log.trace(LogMessage.format("Got env property for \"%s\"", name));
     }
 
     return value;
+  }
+
+  protected final String resolvePropertyName(String name) {
+    Objects.requireNonNull(name, "Property name must not be null");
+    String resolvedName = checkPropertySymbolVariants(name);
+    if (resolvedName != null) {
+      return resolvedName;
+    }
+    String uppercaseName = name.toUpperCase();
+    if (!name.equals(uppercaseName)) {
+      resolvedName = checkPropertySymbolVariants(uppercaseName);
+      if (resolvedName != null) {
+        return resolvedName;
+      }
+    }
+    return name;
+  }
+
+  @Nullable
+  private String checkPropertySymbolVariants(String name) {
+    // Check name as-is
+    if (this.getSource().containsProperty(name)) {
+      return name;
+    }
+    // Check name with just dots replaced
+    String noDotName = name.replace('.', '_');
+    if (!name.equals(noDotName) && this.source.containsProperty(noDotName)) {
+      return noDotName;
+    }
+    // Check name with just hyphens replaced
+    String noHyphenName = name.replace('-', '_');
+    if (!name.equals(noHyphenName) && this.source.containsProperty(noHyphenName)) {
+      return noHyphenName;
+    }
+    // Check name with dots and hyphens replaced
+    String noDotNoHyphenName = noDotName.replace('-', '_');
+    if (!noDotName.equals(noDotNoHyphenName) && this.source.containsProperty(noDotNoHyphenName)) {
+      return noDotNoHyphenName;
+    }
+    // Give up
+    return null;
   }
 
   public static void addToEnvironment(ConfigurableEnvironment environment) {

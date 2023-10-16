@@ -40,4 +40,19 @@ class DotenvPropertySourceTest {
   void valueFromEnvironmentOverride() {
     assertThat(source.getProperty("EXAMPLE_MESSAGE_3")).isEqualTo("Message 3 from system environment");
   }
+
+  @Test
+  void valueFromEnvironmentAsLowerCaseWithDots() {
+    assertThat(source.getProperty("example.message.2")).isEqualTo("Message 2 from system environment");
+  }
+
+  @Test
+  void valueFromEnvironmentAsLowerCaseWithDashes() {
+    assertThat(source.getProperty("example-message-2")).isEqualTo("Message 2 from system environment");
+  }
+
+  @Test
+  void valueFromEnvironmentAsLowerCaseWithDotsAndDashes() {
+    assertThat(source.getProperty("example.message-2")).isEqualTo("Message 2 from system environment");
+  }
 }

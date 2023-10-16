@@ -32,4 +32,8 @@ public class DotenvPropertyLoader {
   public Object getValue(String key) {
     return dotenv.get(key);
   }
+
+  boolean containsProperty(String key) {
+    return getValue(key) != null;
+  }
 }
