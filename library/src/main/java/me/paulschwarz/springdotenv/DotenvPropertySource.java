@@ -10,6 +10,9 @@ import org.springframework.core.env.PropertySource;
 import org.springframework.core.env.StandardEnvironment;
 import org.springframework.core.log.LogMessage;
 
+/**
+ * A {@link PropertySource} that reads properties from a dotenv file.
+ */
 public class DotenvPropertySource extends PropertySource<DotenvPropertyLoader> {
 
   private static final Log log = LogFactory.getLog(DotenvPropertySource.class);
@@ -23,16 +26,27 @@ public class DotenvPropertySource extends PropertySource<DotenvPropertyLoader> {
 
   private String prefix;
 
+  /**
+   * Create a new instance of {@link DotenvPropertySource}.
+   *
+   * @param name the name of the property source
+   * @param dotenvConfig the configuration for the dotenv file
+   */
   public DotenvPropertySource(String name, DotenvConfig dotenvConfig) {
     super(name, new DotenvPropertyLoader(dotenvConfig));
   }
 
+  /**
+   * Create a new instance of {@link DotenvPropertySource}.
+   *
+   * @param dotenvConfig the configuration for the dotenv file
+   */
   public DotenvPropertySource(DotenvConfig dotenvConfig) {
     this(DOTENV_PROPERTY_SOURCE_NAME, dotenvConfig);
 
     prefix = Optional.ofNullable(dotenvConfig.getPrefix()).orElse(DEFAULT_PREFIX);
 
-    if (!"".equals(prefix)) {
+    if (!prefix.isEmpty()) {
       LogMessage warning = LogMessage.format("spring-dotenv: Using a prefix is DEPRECATED as of spring-dotenv version 3.%n" +
           "spring-dotenv: You are using the prefix \"%1$s\".%n" +
           "spring-dotenv: Please convert all usages of ${%1$sEXAMPLE} to ${EXAMPLE} " +
@@ -67,6 +81,11 @@ public class DotenvPropertySource extends PropertySource<DotenvPropertyLoader> {
     return value;
   }
 
+  /**
+   * Add the {@link DotenvPropertySource} to the given Spring's {@link ConfigurableEnvironment}.
+   *
+   * @param environment the environment to add the {@link DotenvPropertySource} to
+   */
   public static void addToEnvironment(ConfigurableEnvironment environment) {
     DotenvConfig dotenvConfig = new DotenvConfig(DotenvConfigProperties.loadProperties());
     DotenvPropertySource dotenvPropertySource = new DotenvPropertySource(dotenvConfig);

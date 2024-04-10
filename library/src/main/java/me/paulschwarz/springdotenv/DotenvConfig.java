@@ -2,6 +2,9 @@ package me.paulschwarz.springdotenv;
 
 import java.util.Properties;
 
+/**
+ * Configuration for the dotenv file.
+ */
 public class DotenvConfig {
 
   private final String prefix;
@@ -12,6 +15,11 @@ public class DotenvConfig {
   private final boolean systemProperties;
   private final boolean suppressPrefixDeprecationWarning;
 
+  /**
+   * Create a new instance of {@link DotenvConfig}.
+   *
+   * @param propertiesFile the env file
+   */
   public DotenvConfig(Properties propertiesFile) {
     prefix = getStringProperty(propertiesFile, "prefix");
     directory = getStringProperty(propertiesFile, "directory");
@@ -36,34 +44,58 @@ public class DotenvConfig {
     return Boolean.parseBoolean(propertiesFile.getProperty(key, String.valueOf(defaultValue)));
   }
 
+  /**
+   * @return the directory containing the <code>.env</code> file.
+   */
   public String getDirectory() {
     return directory;
   }
 
+  /**
+   * @return the filename providing the properties.
+   */
   public String getFilename() {
     return filename;
   }
 
+  /**
+   * @return prefix to add to loaded properties. Defaults to empty.
+   */
   public String getPrefix() {
     return prefix;
   }
 
+  /**
+   * @return <code>true</code> if Dotenv should ignore malformed entries.
+   */
   public boolean ignoreIfMalformed() {
     return ignoreIfMalformed;
   }
 
+  /**
+   * @return <code>true</code> if Dotenv should ignore missing files. Defaults to <code>true</code>.
+   */
   public boolean ignoreIfMissing() {
     return ignoreIfMissing;
   }
 
+  /**
+   * @return <code>true</code>, if the environment variables should be loaded into System properties.
+   */
   public boolean systemProperties() {
     return systemProperties;
   }
 
+  /**
+   * @return the filename providing the properties.
+   */
   public boolean suppressPrefixDeprecationWarning() {
     return suppressPrefixDeprecationWarning;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String toString() {
     return "DotenvConfig{" +

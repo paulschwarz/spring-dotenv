@@ -4,10 +4,18 @@ import io.github.cdimascio.dotenv.Dotenv;
 import io.github.cdimascio.dotenv.DotenvBuilder;
 import java.util.Optional;
 
+/**
+ * Load properties from a dotenv.
+ */
 public class DotenvPropertyLoader {
 
   private final Dotenv dotenv;
 
+  /**
+   * Create a new instance of {@link DotenvPropertyLoader}.
+   *
+   * @param dotenvConfig the configuration for dotenv.
+   */
   public DotenvPropertyLoader(DotenvConfig dotenvConfig) {
     DotenvBuilder dotenvBuilder = Dotenv.configure();
 
@@ -29,6 +37,12 @@ public class DotenvPropertyLoader {
     dotenv = dotenvBuilder.load();
   }
 
+  /**
+   * Get the value for a key.
+   *
+   * @param key the key
+   * @return the value associated with <code>key</code>.
+   */
   public Object getValue(String key) {
     return dotenv.get(key);
   }

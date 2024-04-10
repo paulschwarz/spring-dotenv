@@ -4,6 +4,9 @@ import me.paulschwarz.springdotenv.DotenvPropertySource;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 
+/**
+ * Initialize Spring's {@link org.springframework.context.ApplicationContext} with the {@link DotenvPropertySource}.
+ */
 public class DotenvApplicationInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
   /**

@@ -8,9 +8,18 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.ConfigurableEnvironment;
 
+/**
+ * Add the {@link DotenvPropertySource} to Spring's application environment.
+ */
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class DotenvApplicationRunListener implements SpringApplicationRunListener {
 
+  /**
+   * Create a new instance of {@link DotenvApplicationRunListener}.
+   *
+   * @param application the application
+   * @param args the application's arguments
+   */
   @SuppressWarnings("unused")
   public DotenvApplicationRunListener(SpringApplication application, String[] args) {
     // unused

@@ -9,5 +9,4 @@ include 'spring-jakarta-webapp-example'
 project(':library').name = 'spring-dotenv'
 project(':spring-boot-example').projectDir = new File(settingsDir, 'examples/spring-boot-example')
 project(':spring-app-example').projectDir = new File(settingsDir, 'examples/spring-app-example')
-project(':spring-javaee-webapp-example').projectDir = new File(settingsDir, 'examples/spring-javaee-webapp-example')
 project(':spring-jakarta-webapp-example').projectDir = new File(settingsDir, 'examples/spring-jakarta-webapp-example')
