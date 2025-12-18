@@ -8,7 +8,11 @@ def prop(propKey, envKey) {
 
 def releaseVersion = prop('release.version', 'RELEASE_VERSION')
 if (! releaseVersion) {
-    throw new GradleException('You must specify "release.version" or "RELEASE_VERSION"')
+    if (System.getenv('CI')) {
+        throw new GradleException('You must specify "release.version" or "RELEASE_VERSION"')
+    } else {
+        releaseVersion = '0'
+    }
 }
 
 subprojects {
