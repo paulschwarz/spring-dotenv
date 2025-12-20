@@ -1,0 +1,25 @@
+[versions]
+java = "17"
+dotenv = "3.2.0"
+spring6 = "6.2.15"
+spring-boot3 = "3.5.9"
+spring-boot4 = "4.0.0"
+
+[libraries]
+dotenv = { module = "io.github.cdimascio:dotenv-java", version.ref = "dotenv" }
+assertj = { module = "org.assertj:assertj-core", version = "3.27.6" }
+mockito = { module = "org.mockito:mockito-core", version = "5.21.0" }
+junit-bom = { module = "org.junit:junit-bom", version = "6.0.1" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api" }
+slf4j-api = { module = "org.slf4j:slf4j-api", version = "2.0.17" }
+logback-classic = { module = "ch.qos.logback:logback-classic", version = "1.5.22"}
+spring6-bom = { module = "org.springframework:spring-framework-bom", version.ref = "spring6" }
+spring-core = { module = "org.springframework:spring-core"}
+spring-context = { module = "org.springframework:spring-context" }
+spring-boot3-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot3" }
+spring-boot4-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot4" }
+spring-boot = { module = "org.springframework.boot:spring-boot" }
+
+[plugins]
+#publish = { id = "com.vanniktech.maven.publish", version = "0.35.0" }

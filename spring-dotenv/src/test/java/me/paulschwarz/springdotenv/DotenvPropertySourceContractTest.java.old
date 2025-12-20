@@ -1,0 +1,143 @@
+//package me.paulschwarz.springdotenv;
+//
+//import static org.assertj.core.api.Assertions.assertThat;
+//
+//import java.util.Properties;
+//import java.util.stream.Stream;
+//
+//import me.paulschwarz.springdotenv.testkit.SystemPropertiesScope;
+//import me.paulschwarz.springdotenv.testkit.TestKeys;
+//import me.paulschwarz.springdotenv.testkit.TestValues;
+//import org.junit.jupiter.api.AfterEach;
+//import org.junit.jupiter.api.Named;
+//import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.params.ParameterizedTest;
+//import org.junit.jupiter.params.provider.MethodSource;
+//
+//class DotenvPropertySourceContractTest {
+//
+//    private SystemPropertiesScope sysprops;
+//
+//    @AfterEach
+//    void tearDown() throws Exception {
+//        if (sysprops != null) sysprops.close();
+//        sysprops = null;
+//    }
+//
+//    @Test
+//    void irrelevantKey_returnsNull() {
+//        var source = new DotenvPropertySource(new DotenvConfig(new Properties()));
+//        assertThat(source.getProperty("other.VALUE")).isNull();
+//    }
+//
+//    @Test
+//    void missingEverywhere_returnsNull() {
+//        var source = sourceWithDotenv("dotenv/precedence.env", defaultConfig());
+//        assertThat(source.getProperty(TestKeys.MISSING)).isNull();
+//    }
+//
+//    @Test
+//    void dotenvOnly_resolvesFromDotenv() {
+//        var source = sourceWithDotenv("dotenv/precedence.env", defaultConfig());
+//        assertThat(source.getProperty(TestKeys.DOTENV_ONLY)).isEqualTo(TestValues."from dotenv");
+//    }
+//
+//    @Test
+//    void prefixEnabled_unprefixedKey_returnsNull() {
+//        var cfg = defaultConfig();
+//        cfg.setProperty("prefix", TestKeys.PREFIX);
+//
+//        var source = sourceWithDotenv("dotenv/precedence.env", cfg);
+//        assertThat(source.getProperty(TestKeys.DOTENV_ONLY)).isNull();
+//        assertThat(source.getProperty(TestKeys.PREFIXED_DOTENV_ONLY)).isEqualTo(TestValues."from dotenv");
+//    }
+//
+//    @Test
+//    void systemPropertiesEnabled_sysOnly_resolvesFromSysprops() {
+//        sysprops = new SystemPropertiesScope()
+//            .set(TestKeys.SYS_ONLY, TestValues."from sysprops");
+//
+//        var cfg = defaultConfig();
+//        cfg.setProperty("systemProperties", "true");
+//
+//        var source = sourceWithDotenv("dotenv/precedence.env", cfg);
+//        assertThat(source.getProperty(TestKeys.SYS_ONLY)).isEqualTo(TestValues."from sysprops");
+//    }
+//
+//    @ParameterizedTest(name = "{0}")
+//    @MethodSource("precedenceCases")
+//    void precedence_rules_are_obeyed(PrecedenceCase c) {
+//        sysprops = new SystemPropertiesScope();
+//
+//        // system props (optional)
+//        if (c.sysValue != null) sysprops.set(c.key, c.sysValue);
+//
+//        // NOTE: core module cannot reliably set real OS env in-process.
+//        // So in core tests we only verify dotenv vs sysprops precedence here.
+//        // Env precedence is verified in Boot integration suites (Step 3).
+//        var cfg = defaultConfig();
+//        cfg.setProperty("systemProperties", Boolean.toString(c.systemPropertiesEnabled));
+//
+//        var source = sourceWithDotenv("dotenv/precedence.env", cfg);
+//        assertThat(source.getProperty(c.key)).isEqualTo(c.expected);
+//    }
+//
+//    static Stream<PrecedenceCase> precedenceCases() {
+//        return Stream.of(
+//            PrecedenceCase.named("dotenv beats sysprops when systemProperties=false",
+//                TestKeys.DOTENV_AND_SYS, TestValues."from sysprops", false, TestValues."from dotenv"),
+//
+//            PrecedenceCase.named("sysprops visible when systemProperties=true (DOTENV_AND_SYS)",
+//                TestKeys.DOTENV_AND_SYS, TestValues."from sysprops", true, /* decide expected */ TestValues."from sysprops"),
+//
+//            PrecedenceCase.named("sysprops visible when systemProperties=true (SYS_ONLY)",
+//                TestKeys.SYS_ONLY, TestValues."from sysprops", true, TestValues."from sysprops")
+//        );
+//    }
+//
+//    @Test
+//    void ignoreIfMissing_true_doesNotThrow_whenDotenvNotFound() {
+//        var cfg = defaultConfig();
+//        cfg.setProperty("ignoreIfMissing", "true");
+//        cfg.setProperty("directory", "no-such-dir");
+//        cfg.setProperty("filename", "nope.env");
+//
+//        var source = new DotenvPropertySource(new DotenvConfig(cfg));
+//        assertThat(source.getProperty(TestKeys.DOTENV_ONLY)).isNull();
+//    }
+//
+//    // Add this only if you have a clear “malformed line” behavior
+//    @Test
+//    void ignoreIfMalformed_true_doesNotThrow_whenDotenvMalformed() {
+//        var cfg = defaultConfig();
+//        cfg.setProperty("ignoreIfMalformed", "true");
+//
+//        var source = sourceWithDotenv("dotenv/malformed.env", cfg);
+//        // we can still resolve GOOD if your parser keeps good lines
+//        assertThat(source.getProperty("GOOD")).isNotNull();
+//    }
+//
+//    private static Properties defaultConfig() {
+//        // IMPORTANT: configure directory/filename so DotenvPropertySource reads our testkit dotenv
+//        // Adapt these keys if your config differs.
+//        var p = new Properties();
+//        p.setProperty("directory", "classpath:"); // if supported
+//        p.setProperty("filename", "dotenv/precedence.env"); // may vary
+//        return p;
+//    }
+//
+//    private static DotenvPropertySource sourceWithDotenv(String classpathFile, Properties configProps) {
+//        // If your config expects directory+filename separately, set them here:
+//        configProps.setProperty("directory", "classpath:");
+//        configProps.setProperty("filename", classpathFile);
+//
+//        return new DotenvPropertySource(new DotenvConfig(configProps));
+//    }
+//
+//    record PrecedenceCase(String name, String key, String sysValue, boolean systemPropertiesEnabled, String expected) {
+//        static PrecedenceCase named(String name, String key, String sysValue, boolean systemPropertiesEnabled, String expected) {
+//            return new PrecedenceCase(name, key, sysValue, systemPropertiesEnabled, expected);
+//        }
+//        @Override public String toString() { return name; }
+//    }
+//}

@@ -1,3 +1,0 @@
-example:
-  name: ${EXAMPLE_NAME:World}
-  logging: ${EXAMPLE_CONSOLE_LOG_PATTERN:%m %n}

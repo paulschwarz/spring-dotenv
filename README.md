@@ -5,13 +5,7 @@
 [![GitHub](https://img.shields.io/github/license/paulschwarz/spring-dotenv?color=orange)](https://github.com/paulschwarz/spring-dotenv/blob/master/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/paulschwarz/spring-dotenv?color=yellowgreen)](https://github.com/paulschwarz/spring-dotenv/stargazers)
 
-# Breaking changes in version 3
-
-- The `env.` prefix is no longer default. It is now expected that you provide no prefix in your configuration files.
-- By default the .env contents and the contents of the system enviroment are loaded into Java system properties.
-- The property source is loaded earlier into the Spring lifecycle allowing dotenv to be effective before the application context is ready.
-
-Provides a Spring [PropertySource](https://github.com/spring-projects/spring-framework/blob/v5.2.3.RELEASE/spring-core/src/main/java/org/springframework/core/env/PropertySource.java) that delegates to the excellent [dotenv-java](https://github.com/cdimascio/dotenv-java) library.
+Provides a Spring [PropertySource](https://github.com/spring-projects/spring-framework/blob/main/spring-core/src/main/java/org/springframework/core/env/PropertySource.java) that delegates to the excellent [dotenv-java](https://github.com/cdimascio/dotenv-java/blob/master/README.md) library.
 
 Storing [configuration in the environment](http://12factor.net/config) is one of the tenets of a [twelve-factor app](http://12factor.net). Anything that is likely to change between deployment environments – such as resource handles for databases or credentials for external services – should be extracted from the code into environment variables.
 
@@ -19,9 +13,9 @@ It is not always practical to set environment variables on development machines 
 
 ## Installation
 
-The current version requires JDK 11 or newer.
-If you your project depends on an older JDK, use
-[spring-dotenv 3.0.0](https://github.com/paulschwarz/spring-dotenv/releases/tag/v3.0.0).
+The current version requires JDK 17 or newer.
+If you your project depends on an older JDK, use 
+[previous release](https://github.com/paulschwarz/spring-dotenv/releases).
 
 ### ... but first!
 
@@ -57,8 +51,6 @@ implementation "me.paulschwarz:spring-dotenv:${version}"
 [*Installation instructions*](https://github.com/paulschwarz/spring-dotenv/releases/latest)
     
 ## Usage
-
-Refer to the [demo applications](examples).
 
 Imagine a simple application which outputs "Hello, `example.name`". We can use Spring to load the property `example.name` from an application.properties file or an application.yml file.
 
@@ -113,28 +105,42 @@ export EXAMPLE_NAME=World
 
 ## Configuration (optional)
 
-This library supports the same configuration values as the underlying [dotenv-java configuration](https://github.com/cdimascio/dotenv-java#configuration-options). Configuration is completely optional, however if you need to override defaults, you may do so by adding the following to **.env.properties**:
+This library supports similar configuration options as the underlying [dotenv-java configuration](https://github.com/cdimascio/dotenv-java#configuration-options). Configuration is completely optional, however if you need to override defaults, you may do so by proving system properties:
 
 ```properties
-directory=<string>
-filename=<string>
-ignoreIfMalformed=<boolean>
-ignoreIfMissing=<boolean>
-systemProperties=<boolean>
-prefix=<string>
+springdotenv.enabled=<boolean>
+springdotenv.directory=<string>
+springdotenv.filename=<string>
+springdotenv.ignoreIfMalformed=<boolean>
+springdotenv.ignoreIfMissing=<boolean>
+springdotenv.systemProperties=<boolean>
+springdotenv.prefix=<string>
+springdotenv.suppressPrefixDeprecationWarning=<boolean>
 ```
 
-By default, this library sets `ignoreIfMissing` to `true`. You may change this behaviour as follows:
+If you prefer to use environment variables, the equivalents are available as:
 
 ```properties
-ignoreIfMissing=false
+SPRINGDOTENV_ENABLED
+SPRINGDOTENV_DIRECTORY
+SPRINGDOTENV_FILENAME
+SPRINGDOTENV_IGNORE_IF_MALFORMED
+SPRINGDOTENV_IGNORE_IF_MISSING
+SPRINGDOTENV_SYSTEM_PROPERTIES
+SPRINGDOTENV_PREFIX
+SPRINGDOTENV_SUPPRESS_PREFIX_DEPRECATION_WARNING
 ```
 
-Prior to version 3, the library expected properties to be prefixed with `env.`. The default behaviour going forward is to not use a prefix. If you require a prefix, then you can provide one like this:
-
+By default, this library sets `ignoreIfMissing` to `true`. You may change this behavior as follows:
 
 ```properties
-prefix=env.
+springdotenv.ignoreIfMissing=false
+```
+
+Prior to version 3, the library expected properties to be prefixed with `env.`. The default behavior going forward is to not use a prefix. If you require a prefix, then you can provide one like this:
+
+```properties
+springdotenv.prefix=env.
 ```
 
 ## Building spring-dotenv
@@ -154,11 +160,3 @@ Please make sure to update tests as appropriate.
 ## License
 
 [MIT](LICENSE)
-
-## Acknowledgements
-
-[Laravel Configuration](https://laravel.com/docs/master/configuration) for a great example of integrating dotenv with a framework.  
-The dotenv libraries for [Ruby](https://github.com/bkeepers/dotenv) and [Java](https://github.com/cdimascio/dotenv-java).    
-Spring Boot's [RandomValuePropertySource](https://github.com/spring-projects/spring-boot/blob/v2.2.4.RELEASE/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/env/RandomValuePropertySource.java) for an example of a custom property source.  
-[Michał Bychawski](https://www.linkedin.com/in/michał-bychawski-541733aa) for help putting this together.  
-[Dan Zheng](https://github.com/clevertension) for contributing sample applications.
