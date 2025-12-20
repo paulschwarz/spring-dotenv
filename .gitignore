@@ -31,9 +31,4 @@ out/
 .vscode/
 
 ### Local Configuration ###
-gradle.properties
 .env
-
-### Exceptions for testing ###
-!/library/src/test/resources/.env
-!/examples/**/.env

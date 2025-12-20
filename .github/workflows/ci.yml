@@ -7,28 +7,23 @@ on:
       - '**'
   pull_request:
     branches: [ master, main ]
-    tags-ignore:
-      - '**'
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Get the version
-        id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\/v/}
+      - uses: actions/checkout@v4
+
       - name: Set up JDK
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
-          distribution: 'adopt'
+          distribution: temurin
           java-version: 17
-          cache: 'gradle'
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+          cache: gradle
+
       - name: Build with Gradle
-        run: ./gradlew build --console=plain
-        env:
-          RELEASE_VERSION: ${{ steps.get_version.outputs.VERSION }}
-          SIGNING_PASSWORD: ${{ secrets.GPG_SECRET }}
-          SIGNING_KEY: ${{ secrets.GPG_PUBLIC_KEY_AMORED }}
+        run: ./gradlew build --console=plain --stacktrace --no-daemon

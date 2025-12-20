@@ -1,0 +1,1 @@
+org.springframework.boot.env.EnvironmentPostProcessor=me.paulschwarz.springdotenv.springboot.Boot3DotenvEnvironmentPostProcessor

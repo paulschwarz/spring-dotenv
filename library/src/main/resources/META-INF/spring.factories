@@ -1,1 +1,0 @@
-org.springframework.boot.SpringApplicationRunListener=me.paulschwarz.springdotenv.springboot.DotenvApplicationRunListener
