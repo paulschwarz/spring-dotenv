@@ -1,3 +1,5 @@
+import java.util.Base64
+
 plugins {
     `maven-publish`
     signing
@@ -98,4 +100,27 @@ extensions.configure<SigningExtension>("signing") {
         useInMemoryPgpKeys(signingKey, signingPassphrase)
         sign(publishing.publications)
     }
+}
+
+tasks.register<Exec>("centralPortalHandoff") {
+    onlyIf { !version.toString().endsWith("-SNAPSHOT") }
+
+    doFirst {
+        val user = providers.gradleProperty("centralTokenUsername").orNull
+            ?: error("centralTokenUsername missing")
+        val pass = providers.gradleProperty("centralTokenPassword").orNull
+            ?: error("centralTokenPassword missing")
+        val bearer = Base64.getEncoder().encodeToString("$user:$pass".toByteArray())
+        val namespace = "me.paulschwarz"
+
+        commandLine(
+            "curl", "-sS", "-X", "POST",
+            "https://ossrh-staging-api.central.sonatype.com/manual/upload/defaultRepository/$namespace",
+            "-H", "Authorization: Bearer $bearer"
+        )
+    }
+}
+
+tasks.withType<PublishToMavenRepository>().configureEach {
+    finalizedBy("centralPortalHandoff")
 }
