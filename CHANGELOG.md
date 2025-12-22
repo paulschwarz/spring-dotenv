@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+- (nothing yet)
+
+## [5.0.0] – 2025-12-23
 
 ### 🚨 Breaking Changes
 
