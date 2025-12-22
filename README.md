@@ -119,8 +119,6 @@ springdotenv.filename=<string>
 springdotenv.ignoreIfMalformed=<boolean>
 springdotenv.ignoreIfMissing=<boolean>
 springdotenv.exportToSystemProperties=<boolean>
-springdotenv.prefix=<string>
-springdotenv.suppressPrefixDeprecationWarning=<boolean>
 ```
 
 If you prefer to use environment variables, the equivalents are available as:
@@ -132,20 +130,12 @@ SPRINGDOTENV_FILENAME
 SPRINGDOTENV_IGNORE_IF_MALFORMED
 SPRINGDOTENV_IGNORE_IF_MISSING
 SPRINGDOTENV_EXPORT_TO_SYSTEM_PROPERTIES
-SPRINGDOTENV_PREFIX
-SPRINGDOTENV_SUPPRESS_PREFIX_DEPRECATION_WARNING
 ```
 
 By default, this library sets `ignoreIfMissing` to `true`. You may change this behavior as follows:
 
 ```properties
 springdotenv.ignoreIfMissing=false
-```
-
-Prior to version 3, the library expected properties to be prefixed with `env.`. The default behavior going forward is to not use a prefix. If you require a prefix, then you can provide one like this:
-
-```properties
-springdotenv.prefix=env.
 ```
 
 ## Building spring-dotenv

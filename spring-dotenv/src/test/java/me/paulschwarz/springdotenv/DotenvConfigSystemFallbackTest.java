@@ -16,30 +16,26 @@ class DotenvConfigSystemFallbackTest {
 
     @Test
     void verifyDotenvConfigOptions() {
-        assertThat(DotenvConfig.ALL_KEYS).hasSize(8);
+        assertThat(DotenvConfig.ALL_KEYS).hasSize(6);
     }
 
     @Test
     void load_reads_system_properties_as_fallback() {
         sys.set("springdotenv.enabled", "false");
-        sys.set("springdotenv.prefix", "env.");
         sys.set("springdotenv.directory", "dotenv");
         sys.set("springdotenv.filename", "smoke.env");
         sys.set("springdotenv.ignoreIfMissing", "false");
         sys.set("springdotenv.ignoreIfMalformed", "true");
         sys.set("springdotenv.exportToSystemProperties", "true");
-        sys.set("springdotenv.suppressPrefixDeprecationWarning", "true");
 
         // Read in the sysprops/env/defaults
         DotenvConfig cfg = DotenvConfig.load();
 
         assertThat(cfg.enabled()).isFalse();
-        assertThat(cfg.prefix()).isEqualTo("env.");
         assertThat(cfg.directory()).isEqualTo("dotenv");
         assertThat(cfg.filename()).isEqualTo("smoke.env");
         assertThat(cfg.ignoreIfMissing()).isFalse();
         assertThat(cfg.ignoreIfMalformed()).isTrue();
         assertThat(cfg.exportToSystemProperties()).isTrue();
-        assertThat(cfg.suppressPrefixDeprecationWarning()).isTrue();
     }
 }
