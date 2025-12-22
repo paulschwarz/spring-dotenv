@@ -15,6 +15,8 @@
   Update application properties, environment variables, and any scripts or
   documentation that control exporting dotenv values into system properties.
 
+  `systemProperties` is deprecated but still supported with warning.
+
 #### Artifact split & coordinates
 
 The project is now published as multiple artifacts. Consumers must choose the

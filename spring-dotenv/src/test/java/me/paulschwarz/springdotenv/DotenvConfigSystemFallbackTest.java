@@ -16,7 +16,7 @@ class DotenvConfigSystemFallbackTest {
 
     @Test
     void verifyDotenvConfigOptions() {
-        assertThat(DotenvConfig.ALL_KEYS).hasSize(6);
+        assertThat(DotenvConfig.ALL_KEYS).hasSize(7);
     }
 
     @Test
@@ -36,6 +36,33 @@ class DotenvConfigSystemFallbackTest {
         assertThat(cfg.filename()).isEqualTo("smoke.env");
         assertThat(cfg.ignoreIfMissing()).isFalse();
         assertThat(cfg.ignoreIfMalformed()).isTrue();
+        assertThat(cfg.exportToSystemProperties()).isTrue();
+    }
+
+    /**
+     * Legacy support: remove when we no longer support systemProperties
+     */
+    @Test
+    void legacy__systemProperties() {
+        sys.set("springdotenv.systemProperties", "true");
+
+        // Read in the sysprops/env/defaults
+        DotenvConfig cfg = DotenvConfig.load();
+
+        assertThat(cfg.exportToSystemProperties()).isTrue();
+    }
+
+    /**
+     * Legacy support: remove when we no longer support systemProperties
+     */
+    @Test
+    void legacy__exportToSystemProperties_beats_systemProperties() {
+        sys.set("springdotenv.exportToSystemProperties", "true");
+        sys.set("springdotenv.systemProperties", "false");
+
+        // Read in the sysprops/env/defaults
+        DotenvConfig cfg = DotenvConfig.load();
+
         assertThat(cfg.exportToSystemProperties()).isTrue();
     }
 }

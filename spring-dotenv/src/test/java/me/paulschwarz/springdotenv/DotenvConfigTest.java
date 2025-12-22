@@ -11,7 +11,7 @@ class DotenvConfigTest {
 
     @Test
     void verifyDotenvConfigOptions() {
-        Assertions.assertThat(DotenvConfig.ALL_KEYS).hasSize(6);
+        Assertions.assertThat(DotenvConfig.ALL_KEYS).hasSize(7);
     }
 
     @Test
