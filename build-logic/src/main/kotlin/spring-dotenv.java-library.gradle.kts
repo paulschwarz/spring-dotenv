@@ -1,15 +1,11 @@
 plugins {
     `java-library`
     `jvm-test-suite`
+    id("net.ltgt.errorprone")
 }
 
-val javaVersion = extensions
-    .getByType<VersionCatalogsExtension>()
-    .named("libs")
-    .findVersion("java")
-    .get()
-    .requiredVersion
-    .toInt()
+val libs: VersionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
+val javaVersion: Int = libs.findVersion("java").get().requiredVersion.toInt()
 
 java {
     toolchain {
@@ -17,4 +13,8 @@ java {
     }
     withSourcesJar()
     withJavadocJar()
+}
+
+dependencies {
+    add("errorprone", libs.findLibrary("errorprone-core").get())
 }
