@@ -33,6 +33,7 @@ jobs:
         run: |
           set -euo pipefail
           latest="$(git tag -l 'v*' --sort=-v:refname | head -n 1 || true)"
+          echo "LATEST_TAG=$latest" >> "$GITHUB_OUTPUT"
           if [[ -z "$latest" ]]; then
             echo "SNAPSHOT_VERSION=0.1.0-SNAPSHOT" >> "$GITHUB_OUTPUT"
             exit 0
