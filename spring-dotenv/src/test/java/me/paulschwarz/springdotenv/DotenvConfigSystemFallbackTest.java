@@ -27,7 +27,7 @@ class DotenvConfigSystemFallbackTest {
         sys.set("springdotenv.filename", "smoke.env");
         sys.set("springdotenv.ignoreIfMissing", "false");
         sys.set("springdotenv.ignoreIfMalformed", "true");
-        sys.set("springdotenv.systemProperties", "true");
+        sys.set("springdotenv.exportToSystemProperties", "true");
         sys.set("springdotenv.suppressPrefixDeprecationWarning", "true");
 
         // Read in the sysprops/env/defaults
@@ -39,7 +39,7 @@ class DotenvConfigSystemFallbackTest {
         assertThat(cfg.filename()).isEqualTo("smoke.env");
         assertThat(cfg.ignoreIfMissing()).isFalse();
         assertThat(cfg.ignoreIfMalformed()).isTrue();
-        assertThat(cfg.systemProperties()).isTrue();
+        assertThat(cfg.exportToSystemProperties()).isTrue();
         assertThat(cfg.suppressPrefixDeprecationWarning()).isTrue();
     }
 }

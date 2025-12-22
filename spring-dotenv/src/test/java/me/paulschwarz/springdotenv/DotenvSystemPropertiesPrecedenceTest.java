@@ -16,14 +16,14 @@ class DotenvSystemPropertiesPrecedenceTest {
     static final SystemPropertiesExtension sys = new SystemPropertiesExtension();
 
     @Test
-    void systemProperties_false_syspropsAreIgnored() {
+    void exportToSystemProperties_false_syspropsAreIgnored() {
         sys.set("DOTENV_AND_SYS", "from sysprops");
         sys.set("SYS_ONLY", "from sysprops");
 
         DotenvPropertySource source = new DotenvPropertySource(DotenvConfig.load(Map.of(
             "springdotenv.directory", "dotenv",
             "springdotenv.filename", "precedence.env",
-            "springdotenv.systemProperties", "false"
+            "springdotenv.exportToSystemProperties", "false"
         )));
 
         // sysprops ignored, so dotenv value should win for DOTENV_AND_SYS
@@ -34,14 +34,14 @@ class DotenvSystemPropertiesPrecedenceTest {
     }
 
     @Test
-    void systemProperties_true_syspropsAreVisible_andOverrideDotenv() {
+    void exportToSystemProperties_true_syspropsAreVisible_andOverrideDotenv() {
         sys.set("DOTENV_AND_SYS", "from sysprops");
         sys.set("SYS_ONLY", "from sysprops");
 
         DotenvPropertySource source = new DotenvPropertySource(DotenvConfig.load(Map.of(
             "springdotenv.directory", "dotenv",
             "springdotenv.filename", "precedence.env",
-            "springdotenv.systemProperties", "true"
+            "springdotenv.exportToSystemProperties", "true"
         )));
 
         // lookup is still dotenv-based

@@ -22,7 +22,7 @@ public class DotenvPropertyLoader {
             dotenvBuilder.ignoreIfMissing();
         }
 
-        if (dotenvConfig.systemProperties()) {
+        if (dotenvConfig.exportToSystemProperties()) {
             dotenvBuilder.systemProperties();
         }
 

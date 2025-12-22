@@ -12,7 +12,7 @@ public record DotenvConfig(
     String filename,
     boolean ignoreIfMalformed,
     boolean ignoreIfMissing,
-    boolean systemProperties,
+    boolean exportToSystemProperties,
     boolean suppressPrefixDeprecationWarning,
     boolean enabled
 ) {
@@ -23,7 +23,7 @@ public record DotenvConfig(
     public static final String DEFAULT_FILENAME = null;
     public static final boolean DEFAULT_IGNORE_IF_MALFORMED = false;
     public static final boolean DEFAULT_IGNORE_IF_MISSING = true;
-    public static final boolean DEFAULT_SYSTEM_PROPERTIES = false;
+    public static final boolean DEFAULT_EXPORT_TO_SYSTEM_PROPERTIES = false;
     public static final boolean DEFAULT_SUPPRESS_PREFIX_DEPRECATION_WARNING = false;
     public static final boolean DEFAULT_ENABLED = true;
 
@@ -34,7 +34,7 @@ public record DotenvConfig(
     private static final String K_FILENAME = PREFIX + "filename";
     private static final String K_IGNORE_IF_MALFORMED = PREFIX + "ignoreIfMalformed";
     private static final String K_IGNORE_IF_MISSING = PREFIX + "ignoreIfMissing";
-    private static final String K_SYSTEM_PROPERTIES = PREFIX + "systemProperties";
+    private static final String K_EXPORT_TO_SYSTEM_PROPERTIES = PREFIX + "exportToSystemProperties";
     private static final String K_SUPPRESS_PREFIX_DEPRECATION_WARNING = PREFIX + "suppressPrefixDeprecationWarning";
     private static final String K_ENABLED = PREFIX + "enabled";
 
@@ -44,7 +44,7 @@ public record DotenvConfig(
         K_FILENAME,
         K_IGNORE_IF_MALFORMED,
         K_IGNORE_IF_MISSING,
-        K_SYSTEM_PROPERTIES,
+        K_EXPORT_TO_SYSTEM_PROPERTIES,
         K_SUPPRESS_PREFIX_DEPRECATION_WARNING,
         K_ENABLED
     );
@@ -66,7 +66,7 @@ public record DotenvConfig(
             getString(config, K_FILENAME, DEFAULT_FILENAME),
             getBoolean(config, K_IGNORE_IF_MALFORMED, DEFAULT_IGNORE_IF_MALFORMED),
             getBoolean(config, K_IGNORE_IF_MISSING, DEFAULT_IGNORE_IF_MISSING),
-            getBoolean(config, K_SYSTEM_PROPERTIES, DEFAULT_SYSTEM_PROPERTIES),
+            getBoolean(config, K_EXPORT_TO_SYSTEM_PROPERTIES, DEFAULT_EXPORT_TO_SYSTEM_PROPERTIES),
             getBoolean(config, K_SUPPRESS_PREFIX_DEPRECATION_WARNING, DEFAULT_SUPPRESS_PREFIX_DEPRECATION_WARNING),
             getBoolean(config, K_ENABLED, DEFAULT_ENABLED)
         );

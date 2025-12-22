@@ -11,7 +11,7 @@ import org.junit.jupiter.api.parallel.ResourceLock;
 import org.junit.jupiter.api.parallel.Resources;
 
 @ResourceLock(Resources.SYSTEM_PROPERTIES)
-class DotenvSystemPropertiesToggleTest {
+class DotenvExportToSystemPropertiesToggleTest {
 
     @RegisterExtension
     static final SystemPropertiesExtension sys = new SystemPropertiesExtension();
@@ -26,7 +26,7 @@ class DotenvSystemPropertiesToggleTest {
         new DotenvPropertySource(DotenvConfig.load(Map.of(
             "springdotenv.directory", "dotenv",
             "springdotenv.filename", "smoke.env",
-            "springdotenv.systemProperties", "true"
+            "springdotenv.exportToSystemProperties", "true"
         )));
 
         assertThat(System.getProperty("DOTENV_ONLY")).isEqualTo("from dotenv");
@@ -37,7 +37,7 @@ class DotenvSystemPropertiesToggleTest {
         new DotenvPropertySource(DotenvConfig.load(Map.of(
             "springdotenv.directory", "dotenv",
             "springdotenv.filename", "smoke.env",
-            "springdotenv.systemProperties", "false"
+            "springdotenv.exportToSystemProperties", "false"
         )));
 
         assertThat(System.getProperty("DOTENV_ONLY")).isNull();
