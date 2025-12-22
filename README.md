@@ -161,7 +161,9 @@ All configuration is optional. Defaults are sensible.
   Defaults to `true`. Set to `false` to completely disable integration.
 
 - `springdotenv.exportToSystemProperties`  
-  If enabled, variables loaded from `.env` are also exported to `System.getProperties()`.
+  If enabled, variables loaded from `.env` are also exported to `System.getProperties()`.  
+  This field was previously known as `systemProperties` but was renamed for clarity. 
+  It is deprecated but still supported with warning.
 
 - `springdotenv.ignoreIfMissing`  
   Defaults to `true`. Set to `false` to fail fast when `.env` is absent.
