@@ -42,6 +42,11 @@ jobs:
           patch=$((patch + 1))
           echo "SNAPSHOT_VERSION=${major}.${minor}.${patch}-SNAPSHOT" >> "$GITHUB_OUTPUT"
 
+      - name: Show resolved snapshot version
+        run: |
+          echo "Latest release tag found: ${{ steps.ver.outputs.LATEST_TAG }}"
+          echo "Resolved snapshot version: ${{ steps.ver.outputs.SNAPSHOT_VERSION }}"
+
       - name: Publish snapshot to Maven Central snapshots
         run: ./gradlew publish --console=plain --stacktrace --no-daemon
         env:

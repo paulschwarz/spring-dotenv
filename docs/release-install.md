@@ -6,7 +6,7 @@
 
 ```kotlin
 dependencies {
-  implementation(platform("me.paulschwarz:spring-dotenv-bom:${{ steps.get_version.outputs.VERSION }}"))
+  implementation(platform("me.paulschwarz:spring-dotenv-bom:${VERSION}"))
 
   // Choose one:
   // implementation("me.paulschwarz:spring-dotenv")
@@ -24,7 +24,7 @@ dependencies {
     <dependency>
       <groupId>me.paulschwarz</groupId>
       <artifactId>spring-dotenv-bom</artifactId>
-      <version>${{ steps.get_version.outputs.VERSION }}</version>
+      <version>${VERSION}</version>
       <type>pom</type>
       <scope>import</scope>
     </dependency>
