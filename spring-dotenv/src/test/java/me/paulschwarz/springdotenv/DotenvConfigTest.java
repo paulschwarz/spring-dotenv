@@ -11,7 +11,7 @@ class DotenvConfigTest {
 
     @Test
     void verifyDotenvConfigOptions() {
-        Assertions.assertThat(DotenvConfig.ALL_KEYS).hasSize(8);
+        Assertions.assertThat(DotenvConfig.ALL_KEYS).hasSize(6);
     }
 
     @Test
@@ -35,12 +35,6 @@ class DotenvConfigTest {
 
         assertThat(cfg.exportToSystemProperties())
             .isEqualTo(DotenvConfig.DEFAULT_EXPORT_TO_SYSTEM_PROPERTIES);
-
-        assertThat(cfg.prefix())
-            .isEqualTo(DotenvConfig.DEFAULT_PREFIX);
-
-        assertThat(cfg.suppressPrefixDeprecationWarning())
-            .isEqualTo(DotenvConfig.DEFAULT_SUPPRESS_PREFIX_DEPRECATION_WARNING);
     }
 
     @Test
