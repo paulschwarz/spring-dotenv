@@ -3,6 +3,8 @@ plugins {
     id("spring-dotenv.publish")
 }
 
+description = "Spring Boot 3 integration for loading .env files into the Spring Environment"
+
 dependencies {
     api(project(":spring-dotenv"))
     compileOnly(platform(libs.spring.boot3.bom))

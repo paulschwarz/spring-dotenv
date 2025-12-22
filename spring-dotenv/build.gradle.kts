@@ -3,6 +3,8 @@ plugins {
     id("spring-dotenv.publish")
 }
 
+description = "Core library for loading .env files and resolving environment variables"
+
 dependencies {
     implementation(libs.dotenv)
 
