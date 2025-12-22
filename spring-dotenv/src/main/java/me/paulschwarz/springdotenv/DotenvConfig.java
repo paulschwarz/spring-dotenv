@@ -2,6 +2,7 @@ package me.paulschwarz.springdotenv;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
@@ -15,6 +16,7 @@ public record DotenvConfig(
     boolean suppressPrefixDeprecationWarning,
     boolean enabled
 ) {
+
     // Defaults
     public static final String DEFAULT_PREFIX = null;
     public static final String DEFAULT_DIRECTORY = null;
@@ -78,7 +80,9 @@ public record DotenvConfig(
         String defaultValue
     ) {
         String v = map.get(key);
-        if (v == null) return defaultValue;
+        if (v == null) {
+            return defaultValue;
+        }
 
         String t = v.trim();
 
@@ -121,11 +125,12 @@ public record DotenvConfig(
 
     private static String envToKey(String env) {
         // SPRINGDOTENV_IGNORE_IF_MISSING -> springdotenv.ignoreIfMissing
-        String body = env.substring("SPRINGDOTENV_".length()).toLowerCase();
+        String body = env.substring("SPRINGDOTENV_".length()).toLowerCase(Locale.ROOT);
         StringBuilder sb = new StringBuilder(PREFIX);
 
         boolean upperNext = false;
-        for (char c : body.toCharArray()) {
+        for (int i = 0; i < body.length(); i++) {
+            char c = body.charAt(i);
             if (c == '_') {
                 upperNext = true;
             } else if (upperNext) {
