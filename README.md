@@ -118,7 +118,7 @@ springdotenv.directory=<string>
 springdotenv.filename=<string>
 springdotenv.ignoreIfMalformed=<boolean>
 springdotenv.ignoreIfMissing=<boolean>
-springdotenv.systemProperties=<boolean>
+springdotenv.exportToSystemProperties=<boolean>
 springdotenv.prefix=<string>
 springdotenv.suppressPrefixDeprecationWarning=<boolean>
 ```
@@ -131,7 +131,7 @@ SPRINGDOTENV_DIRECTORY
 SPRINGDOTENV_FILENAME
 SPRINGDOTENV_IGNORE_IF_MALFORMED
 SPRINGDOTENV_IGNORE_IF_MISSING
-SPRINGDOTENV_SYSTEM_PROPERTIES
+SPRINGDOTENV_EXPORT_TO_SYSTEM_PROPERTIES
 SPRINGDOTENV_PREFIX
 SPRINGDOTENV_SUPPRESS_PREFIX_DEPRECATION_WARNING
 ```

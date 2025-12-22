@@ -33,8 +33,8 @@ class DotenvConfigTest {
         assertThat(cfg.ignoreIfMalformed())
             .isEqualTo(DotenvConfig.DEFAULT_IGNORE_IF_MALFORMED);
 
-        assertThat(cfg.systemProperties())
-            .isEqualTo(DotenvConfig.DEFAULT_SYSTEM_PROPERTIES);
+        assertThat(cfg.exportToSystemProperties())
+            .isEqualTo(DotenvConfig.DEFAULT_EXPORT_TO_SYSTEM_PROPERTIES);
 
         assertThat(cfg.prefix())
             .isEqualTo(DotenvConfig.DEFAULT_PREFIX);

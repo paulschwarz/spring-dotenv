@@ -77,7 +77,7 @@ public class DotenvPropertySource extends PropertySource<DotenvPropertyLoader> {
 
         log.info(LogMessage.format("Initialized Dotenv with %s", dotenvConfig));
 
-        if (dotenvConfig.systemProperties()) {
+        if (dotenvConfig.exportToSystemProperties()) {
             log.trace("Dotenv environment available as system properties");
         } else {
             var sources = environment.getPropertySources();
