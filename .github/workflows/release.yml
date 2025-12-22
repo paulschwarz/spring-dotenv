@@ -43,7 +43,7 @@ jobs:
           ORG_GRADLE_PROJECT_releaseVersion: ${{ steps.ver.outputs.VERSION }}
 
       - name: Publish release to Maven Central
-        run: ./gradlew publish --console=plain --stacktrace --no-daemon
+        run: ./gradlew publish --info --console=plain --stacktrace --no-daemon
         env:
           ORG_GRADLE_PROJECT_releaseVersion: ${{ steps.ver.outputs.VERSION }}
           ORG_GRADLE_PROJECT_centralTokenUsername: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
