@@ -7,7 +7,7 @@
 [![Maven Central](https://img.shields.io/maven-central/v/me.paulschwarz/springboot3-dotenv?label=springboot3-dotenv)](https://search.maven.org/artifact/me.paulschwarz/springboot3-dotenv)
 [![Maven Central](https://img.shields.io/maven-central/v/me.paulschwarz/springboot4-dotenv?label=springboot4-dotenv)](https://search.maven.org/artifact/me.paulschwarz/springboot4-dotenv)
 
-[![GitHub](https://img.shields.io/github/license/paulschwarz/spring-dotenv)](https://github.com/paulschwarz/spring-dotenv/blob/master/LICENSE)
+[![GitHub](https://img.shields.io/github/license/paulschwarz/spring-dotenv)](https://github.com/paulschwarz/spring-dotenv/blob/main/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/paulschwarz/spring-dotenv)](https://github.com/paulschwarz/spring-dotenv/stargazers)
 
 Provides a Spring [PropertySource](https://github.com/spring-projects/spring-framework/blob/main/spring-core/src/main/java/org/springframework/core/env/PropertySource.java) that delegates to the excellent [dotenv-java](https://github.com/cdimascio/dotenv-java/blob/master/README.md) library.

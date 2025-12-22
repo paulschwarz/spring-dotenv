@@ -24,7 +24,7 @@ fun MavenPublication.configurePom() {
         licenses {
             license {
                 name.set("MIT License")
-                url.set("https://raw.githubusercontent.com/paulschwarz/spring-dotenv/master/LICENSE")
+                url.set("https://raw.githubusercontent.com/paulschwarz/spring-dotenv/main/LICENSE")
             }
         }
         developers {
