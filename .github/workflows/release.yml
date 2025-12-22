@@ -1,0 +1,61 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+
+      - name: Extract version from tag
+        id: ver
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Build and run tests for release
+        run: ./gradlew clean build --console=plain --stacktrace --no-daemon
+        env:
+          ORG_GRADLE_PROJECT_releaseVersion: ${{ steps.ver.outputs.VERSION }}
+
+      - name: Publish release to Maven Central
+        run: ./gradlew publish --console=plain --stacktrace --no-daemon
+        env:
+          ORG_GRADLE_PROJECT_releaseVersion: ${{ steps.ver.outputs.VERSION }}
+          ORG_GRADLE_PROJECT_centralTokenUsername: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
+          ORG_GRADLE_PROJECT_centralTokenPassword: ${{ secrets.CENTRAL_TOKEN_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_PRIVATE_KEY_ARMORED }}
+          ORG_GRADLE_PROJECT_signingPassphrase: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: Build release body
+        id: relnotes
+        shell: bash
+        run: |
+          set -euo pipefail
+          sed "s/\${VERSION}/${{ steps.ver.outputs.VERSION }}/g" docs/release-install.md > /tmp/release-body.md
+          echo "BODY_PATH=/tmp/release-body.md" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ steps.ver.outputs.VERSION }}
+          body_path: ${{ steps.relnotes.outputs.BODY_PATH }}

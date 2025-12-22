@@ -1,0 +1,52 @@
+name: Snapshots
+
+on:
+  push:
+    branches: [ master, main ]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: snapshots-master
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+
+      - name: Compute next snapshot version from latest v* tag
+        id: ver
+        shell: bash
+        run: |
+          set -euo pipefail
+          latest="$(git tag -l 'v*' --sort=-v:refname | head -n 1 || true)"
+          if [[ -z "$latest" ]]; then
+            echo "SNAPSHOT_VERSION=0.1.0-SNAPSHOT" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          v="${latest#v}"
+          IFS='.' read -r major minor patch <<< "$v"
+          patch=$((patch + 1))
+          echo "SNAPSHOT_VERSION=${major}.${minor}.${patch}-SNAPSHOT" >> "$GITHUB_OUTPUT"
+
+      - name: Publish snapshot to Maven Central snapshots
+        run: ./gradlew publish --console=plain --stacktrace --no-daemon
+        env:
+          ORG_GRADLE_PROJECT_snapshotVersion: ${{ steps.ver.outputs.SNAPSHOT_VERSION }}
+          ORG_GRADLE_PROJECT_centralTokenUsername: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
+          ORG_GRADLE_PROJECT_centralTokenPassword: ${{ secrets.CENTRAL_TOKEN_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_PRIVATE_KEY_ARMORED }}
+          ORG_GRADLE_PROJECT_signingPassphrase: ${{ secrets.GPG_PASSPHRASE }}
