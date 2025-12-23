@@ -3,8 +3,8 @@ java = "17"
 dotenv = "3.2.0"
 spring6 = "6.2.15"
 spring-boot3 = "3.5.9"
-spring-boot4 = "4.0.0"
-errorprone-core = "2.42.0"
+spring-boot4 = "4.0.1"
+errorprone-core = "2.45.0"
 errorprone-gradle = "4.3.0"
 
 [libraries]
