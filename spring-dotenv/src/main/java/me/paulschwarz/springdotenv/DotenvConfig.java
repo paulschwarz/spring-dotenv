@@ -37,6 +37,7 @@ public record DotenvConfig(
     private static final String K_EXPORT_TO_SYSTEM_PROPERTIES = PREFIX + "exportToSystemProperties";
 
     // Legacy (deprecated) key
+    @Deprecated
     private static final String K_SYSTEM_PROPERTIES_LEGACY = PREFIX + "systemProperties";
 
     public static final List<String> ALL_KEYS = List.of(

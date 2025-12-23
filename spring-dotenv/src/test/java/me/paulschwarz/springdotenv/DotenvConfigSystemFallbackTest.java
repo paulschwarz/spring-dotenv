@@ -42,6 +42,7 @@ class DotenvConfigSystemFallbackTest {
     /**
      * Legacy support: remove when we no longer support systemProperties
      */
+    @Deprecated
     @Test
     void legacy__systemProperties() {
         sys.set("springdotenv.systemProperties", "true");
@@ -55,6 +56,7 @@ class DotenvConfigSystemFallbackTest {
     /**
      * Legacy support: remove when we no longer support systemProperties
      */
+    @Deprecated
     @Test
     void legacy__exportToSystemProperties_beats_systemProperties() {
         sys.set("springdotenv.exportToSystemProperties", "true");
