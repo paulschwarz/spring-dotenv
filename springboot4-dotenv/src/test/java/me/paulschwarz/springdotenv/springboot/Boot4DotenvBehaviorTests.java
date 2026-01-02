@@ -5,10 +5,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import me.paulschwarz.springdotenv.testkit.EmptyConfig;
+import me.paulschwarz.springdotenv.testkit.SystemPropertiesExtension;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.parallel.ResourceLock;
+import org.junit.jupiter.api.parallel.Resources;
 import org.springframework.context.ConfigurableApplicationContext;
 
 class Boot4DotenvBehaviorTests {
+
+    @RegisterExtension
+    static final SystemPropertiesExtension sys = new SystemPropertiesExtension();
 
     @Test
     void shouldLoadDotenv_byDefault() {
@@ -154,6 +161,36 @@ class Boot4DotenvBehaviorTests {
             "--springdotenv.filename=smoke.env"
         )) {
             assertThat(ctx.getEnvironment().getProperty("DOTENV_ONLY")).isEqualTo("from dotenv");
+        }
+    }
+
+    @Test
+    @ResourceLock(Resources.SYSTEM_PROPERTIES)
+    void dotenvIsLoadedWhenExportToSystemProperties_true() {
+        sys.clear("DOTENV_ONLY");
+
+        try (ConfigurableApplicationContext ignored = run(
+            EmptyConfig.class,
+            "--springdotenv.directory=dotenv",
+            "--springdotenv.filename=smoke.env",
+            "--springdotenv.exportToSystemProperties=true"
+        )) {
+            assertThat(System.getProperty("DOTENV_ONLY")).isEqualTo("from dotenv");
+        }
+    }
+
+    @Test
+    @ResourceLock(Resources.SYSTEM_PROPERTIES)
+    void dotenvIsLoadedWhenExportToSystemProperties_false() {
+        sys.clear("DOTENV_ONLY");
+
+        try (ConfigurableApplicationContext ignored = run(
+            EmptyConfig.class,
+            "--springdotenv.directory=dotenv",
+            "--springdotenv.filename=smoke.env",
+            "--springdotenv.exportToSystemProperties=false"
+        )) {
+            assertThat(System.getProperty("DOTENV_ONLY")).isNull();
         }
     }
 }

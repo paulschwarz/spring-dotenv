@@ -100,18 +100,19 @@ public class DotenvPropertySource extends PropertySource<DotenvPropertyLoader> {
         log.info(LogMessage.format("Initialized Dotenv with %s", dotenvConfig));
 
         if (dotenvConfig.exportToSystemProperties()) {
+            new DotenvPropertyLoader(dotenvConfig); // Unfortunate constructor magic: triggers load() and export
             log.trace("Dotenv environment available as system properties");
             return;
         }
 
-        PropertySource<?> ps = propertySourceFactory.get();
+        PropertySource<?> propertySource = propertySourceFactory.get();
 
         if (sources.contains(StandardEnvironment.SYSTEM_ENVIRONMENT_PROPERTY_SOURCE_NAME)) {
-            sources.addAfter(StandardEnvironment.SYSTEM_ENVIRONMENT_PROPERTY_SOURCE_NAME, ps);
+            sources.addAfter(StandardEnvironment.SYSTEM_ENVIRONMENT_PROPERTY_SOURCE_NAME, propertySource);
         } else if (sources.contains(StandardEnvironment.SYSTEM_PROPERTIES_PROPERTY_SOURCE_NAME)) {
-            sources.addAfter(StandardEnvironment.SYSTEM_PROPERTIES_PROPERTY_SOURCE_NAME, ps);
+            sources.addAfter(StandardEnvironment.SYSTEM_PROPERTIES_PROPERTY_SOURCE_NAME, propertySource);
         } else {
-            sources.addFirst(ps);
+            sources.addFirst(propertySource);
         }
 
         log.trace("Dotenv PropertySource added to Environment: " + propertySourceName);
