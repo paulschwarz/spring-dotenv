@@ -8,12 +8,13 @@ plugins {
 // --- Version injection (CI-controlled) ---
 val releaseVersion = providers.gradleProperty("releaseVersion").orNull?.trim().orEmpty()
 val snapshotVersion = providers.gradleProperty("snapshotVersion").orNull?.trim().orEmpty()
+val currentVersion = version.toString()
 
 when {
     releaseVersion.isNotBlank() -> version = releaseVersion
     snapshotVersion.isNotBlank() -> version = snapshotVersion
     // fallback (local dev): keep whatever is already set in the project, or default:
-    version.toString().isBlank() -> version = "0.0.0-SNAPSHOT"
+    currentVersion == Project.DEFAULT_VERSION || currentVersion.isBlank() -> version = "0.0.0-SNAPSHOT"
 }
 
 // --- POM metadata ---
