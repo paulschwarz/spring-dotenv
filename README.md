@@ -63,6 +63,15 @@ A BOM is provided to keep versions aligned across modules.
 
 ### Recommended (BOM-based)
 
+#### Gradle
+
+```kotlin
+dependencies {
+    developmentOnly(platform("me.paulschwarz:spring-dotenv-bom:$version"))
+    developmentOnly("me.paulschwarz:springboot4-dotenv")
+}
+```
+
 #### Maven
 
 ```xml
@@ -80,10 +89,11 @@ A BOM is provided to keep versions aligned across modules.
 </dependencyManagement>
 
 <dependencies>
-<dependency>
-    <groupId>me.paulschwarz</groupId>
-    <artifactId>springboot3-dotenv</artifactId>
-</dependency>
+    <dependency>
+        <groupId>me.paulschwarz</groupId>
+        <artifactId>springboot4-dotenv</artifactId>
+        <optional>true</optional>
+    </dependency>
 </dependencies>
 ```
 
