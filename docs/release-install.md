@@ -6,7 +6,7 @@
 
 ```kotlin
 dependencies {
-    developmentOnly(platform("me.paulschwarz:spring-dotenv-bom:${VERSION}"))
+    implementation(platform("me.paulschwarz:spring-dotenv-bom:${VERSION}"))
 
     // Choose one:
     // developmentOnly("me.paulschwarz:spring-dotenv")

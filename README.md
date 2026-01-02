@@ -66,7 +66,7 @@ A BOM is provided to keep versions aligned across modules.
 
 ```kotlin
 dependencies {
-    developmentOnly(platform("me.paulschwarz:spring-dotenv-bom:$version"))
+    implementation(platform("me.paulschwarz:spring-dotenv-bom:$version"))
     developmentOnly("me.paulschwarz:springboot4-dotenv")
 }
 ```
