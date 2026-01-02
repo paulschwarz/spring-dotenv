@@ -22,9 +22,8 @@ ecosystem by exposing `.env` files as a Spring
 It lets you:
 
 - Load environment variables from a local `.env` file during development
-- Keep production behavior unchanged (real environment variables always win)
-- Follow [The Twelve-Factor App](https://12factor.net/config) principle of
-  *configuration via environment*
+- Keep production behavior unchanged (real environment variables always win because `.env` values are added after system environment variables, preserving standard Spring precedence)
+- Follow [The Twelve-Factor App](https://12factor.net/config) principle of *configuration via environment*
 
 The `.env` file is strictly a **development convenience**. It should never be
 committed to source control.
@@ -75,7 +74,6 @@ dependencies {
 #### Maven
 
 ```xml
-
 <dependencyManagement>
     <dependencies>
         <dependency>
@@ -95,15 +93,6 @@ dependencies {
         <optional>true</optional>
     </dependency>
 </dependencies>
-```
-
-#### Gradle
-
-```kotlin
-dependencies {
-    implementation(platform("me.paulschwarz:spring-dotenv-bom:$version"))
-    implementation("me.paulschwarz:springboot3-dotenv")
-}
 ```
 
 ## First-time set up
@@ -150,11 +139,20 @@ At runtime:
 
 This preserves production safety while making local development frictionless.
 
+Keys loaded from `.env` participate in relaxed name resolution when resolved through the Spring `Environment`, both in Spring Boot and plain Spring Framework applications.
+For example, `MY_SERVICE_URL` in `.env` can be accessed as `my.service.url`.
+
 ---
 
 ## Configuration (optional)
 
 All configuration is optional. Defaults are sensible.
+
+### Spring Framework vs Spring Boot
+
+- Spring Boot users get relaxed binding for configuration keys (`springdotenv.*`), using standard Spring Boot rules (kebab-case, camelCase, uppercase environment variables).
+- In plain Spring Framework, `springdotenv.*` configuration keys must be specified exactly.
+- Variables defined inside the `.env` file itself are resolved using relaxed name matching in **both** Spring Boot and plain Spring Framework.
 
 | System property                         | Environment variable                       | Default value |
 |-----------------------------------------|--------------------------------------------|---------------|
@@ -173,7 +171,9 @@ All configuration is optional. Defaults are sensible.
 - `springdotenv.exportToSystemProperties`  
   If enabled, variables loaded from `.env` are also exported to `System.getProperties()`.  
   This field was previously known as `systemProperties` but was renamed for clarity. 
-  It is deprecated but still supported with warning.
+  It is deprecated but still supported with warning.  
+  If both the legacy and the canonical property are set, the canonical key (`springdotenv.exportToSystemProperties`) takes precedence.  
+  When `exportToSystemProperties` is enabled, `.env` variables are exported verbatim. Relaxed name resolution is applied only when values are read via Spring’s Environment.
 
 - `springdotenv.ignoreIfMissing`  
   Defaults to `true`. Set to `false` to fail fast when `.env` is absent.
@@ -185,6 +185,45 @@ All configuration is optional. Defaults are sensible.
 Older versions required properties to be prefixed (for example `env.EXAMPLE_NAME`).
 
 This is no longer the case. Prefixes have been removed.
+
+---
+
+### Configuration binding semantics
+
+Spring-Dotenv follows the configuration rules of the runtime it integrates with.
+
+#### Spring Boot applications
+
+When used with **Spring Boot 3 or 4**, all `springdotenv.*` configuration options and `.env` file entries participate in **standard Spring Boot relaxed binding**.
+
+This means configuration keys are interchangeable across common naming styles:
+
+- `springdotenv.ignore-if-missing` 
+- `springdotenv.ignoreIfMissing` 
+- `SPRINGDOTENV_IGNORE_IF_MISSING`
+
+Likewise, variables defined in `.env` files are resolved using the same relaxed rules when accessed through the Spring `Environment`. For example:
+
+```dotenv
+MY_SERVICE_URL=https://example.com
+```
+
+can be consumed as:
+
+```properties
+my.service.url
+```
+
+This behavior is delegated to Spring Boot’s native `Binder` and matches Boot’s built-in configuration semantics.
+
+#### Spring Framework (non-Boot) applications
+
+When using the **core** `spring-dotenv` **module without Spring Boot**, configuration keys are **strict**:
+
+- Property names must match exactly
+- No relaxed binding is applied
+
+This distinction is intentional and mirrors the behavior of Spring Framework itself.
 
 ---
 

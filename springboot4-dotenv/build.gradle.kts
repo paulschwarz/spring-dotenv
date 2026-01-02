@@ -9,6 +9,8 @@ dependencies {
     api(project(":spring-dotenv"))
     compileOnly(platform(libs.spring.boot4.bom))
     compileOnly(libs.spring.boot)
+    annotationProcessor(platform(libs.spring.boot4.bom))
+    annotationProcessor(libs.spring.boot.configuration.processor)
 }
 
 testing {

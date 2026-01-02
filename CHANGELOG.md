@@ -1,7 +1,55 @@
 # Changelog
 
 ## [Unreleased]
-- (nothing yet)
+
+### ✨ Enhancements
+
+_Relaxed binding for `springdotenv.*` is Spring Boot–only; relaxed resolution of `.env` entries applies to both Spring Boot and Spring Framework._
+
+#### Relaxed binding for `springdotenv.*` configuration
+
+- Full **Spring Boot–style relaxed binding** is now supported for all `springdotenv.*` configuration keys.
+- Configuration can be supplied interchangeably via:  
+  - kebab-case (`springdotenv.ignore-if-missing`)
+  - camelCase (`springdotenv.ignoreIfMissing`)
+  - uppercase environment variables (`SPRINGDOTENV_IGNORE_IF_MISSING`)
+- Behavior is delegated to Spring Boot’s `Binder`, ensuring consistency with native Boot configuration rules.
+
+#### Relaxed binding for `.env` file entries
+
+- Keys defined inside `.env` files now participate in relaxed name resolution when exposed to Spring.
+- This applies equally to Spring Boot and plain Spring Framework applications.
+- This allows seamless access across common naming styles without duplicating entries in `.env`.
+- Aligns dotenv value resolution with Spring Boot’s property resolution semantics.
+
+#### Deterministic precedence between legacy and renamed keys
+
+- When both legacy and new configuration keys are present:
+  - **The new canonical key wins.**
+  - Example:  
+  `springdotenv.exportToSystemProperties` overrides the deprecated `springdotenv.systemProperties`.
+- Legacy keys remain supported for compatibility, with clear precedence rules.
+
+---
+
+### 🧪 Testing
+
+- Added focused smoke tests to validate:  
+  - Relaxed binding across naming variants 
+  - Partial configuration scenarios (defaults + overrides)
+  - Correct precedence between legacy and canonical keys
+- Tests explicitly avoid global system property pollution.
+
+---
+
+### 🧱 Internal changes
+
+- Introduced a Boot-specific relaxed configuration loader that:
+  - Reuses Spring Boot’s binding infrastructure 
+  - Avoids re-implementing relaxed-binding logic 
+- Clear separation between:
+  - **Spring-only behavior** (exact keys)
+  - **Spring Boot behavior** (relaxed binding via `Binder`)
 
 ## [5.0.1] – 2025-12-23
 
