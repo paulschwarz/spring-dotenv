@@ -46,7 +46,7 @@ class SpringDotenvBehaviorTests {
     }
 
     @Test
-    void shouldSupportRelaxedBindingOfEnv() {
+    void shouldNotSupportRelaxedBindingOfEnv() {
         StandardEnvironment env = new StandardEnvironment();
         env.getPropertySources().addFirst(new MapPropertySource("test", Map.of(
             "springdotenv.directory", "dotenv",
@@ -57,9 +57,9 @@ class SpringDotenvBehaviorTests {
         DotenvPropertySource source = new DotenvPropertySource(cfg);
 
         assertThat(source.getProperty("DOTENV_ONLY")).isEqualTo("from dotenv");
-        assertThat(source.getProperty("dotenv.only")).isEqualTo("from dotenv");
-        assertThat(source.getProperty("dotenv-only")).isEqualTo("from dotenv");
-        assertThat(source.getProperty("dotenv_only")).isEqualTo("from dotenv");
+        assertThat(source.getProperty("dotenv.only")).isNull();
+        assertThat(source.getProperty("dotenv-only")).isNull();
+        assertThat(source.getProperty("dotenv_only")).isNull();
     }
 
     @Test

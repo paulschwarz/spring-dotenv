@@ -1,7 +1,6 @@
 package me.paulschwarz.springdotenv.springboot;
 
 import me.paulschwarz.springdotenv.DotenvConfigLoader;
-import me.paulschwarz.springdotenv.spring.DotenvEnvironmentApplier;
 import org.jspecify.annotations.NonNull;
 import org.springframework.boot.EnvironmentPostProcessor;
 import org.springframework.boot.SpringApplication;
@@ -14,6 +13,6 @@ public final class Boot4DotenvEnvironmentPostProcessor implements EnvironmentPos
     @Override
     public void postProcessEnvironment(@NonNull ConfigurableEnvironment env, @NonNull SpringApplication application) {
         var dotenvConfig = dotenvConfigLoader.load(env);
-        DotenvEnvironmentApplier.apply(env, dotenvConfig);
+        Boot4DotenvEnvironmentApplier.apply(env, dotenvConfig);
     }
 }
