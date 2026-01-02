@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+- (nothing yet)
+
+## [5.1.0] – 2026-01-02
 
 ### ✨ Enhancements
 
