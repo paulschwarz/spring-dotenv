@@ -4,7 +4,7 @@
 
 ### ✨ Enhancements
 
-_Relaxed binding for `springdotenv.*` is Spring Boot–only; relaxed resolution of `.env` entries applies to both Spring Boot and Spring Framework._
+_Relaxed binding for `springdotenv.*` **and `.env` entries** is supported only when running under Spring Boot. Plain Spring Framework uses strict key resolution._
 
 #### Relaxed binding for `springdotenv.*` configuration
 
@@ -17,10 +17,10 @@ _Relaxed binding for `springdotenv.*` is Spring Boot–only; relaxed resolution 
 
 #### Relaxed binding for `.env` file entries
 
-- Keys defined inside `.env` files now participate in relaxed name resolution when exposed to Spring.
-- This applies equally to Spring Boot and plain Spring Framework applications.
-- This allows seamless access across common naming styles without duplicating entries in `.env`.
-- Aligns dotenv value resolution with Spring Boot’s property resolution semantics.
+- Keys defined inside `.env` files now participate in relaxed name resolution **when running under Spring Boot**.
+- This allows seamless access across common naming styles (dots, dashes, underscores) without duplicating entries in `.env`.
+- Behavior aligns with Spring Boot’s native environment-variable resolution semantics.
+- In plain Spring Framework applications, `.env` keys are resolved strictly by exact name.
 
 #### Deterministic precedence between legacy and renamed keys
 

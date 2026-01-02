@@ -139,8 +139,20 @@ At runtime:
 
 This preserves production safety while making local development frictionless.
 
-Keys loaded from `.env` participate in relaxed name resolution when resolved through the Spring `Environment`, both in Spring Boot and plain Spring Framework applications.
-For example, `MY_SERVICE_URL` in `.env` can be accessed as `my.service.url`.
+Keys loaded from `.env` participate in relaxed name resolution **when running under Spring Boot (3 or 4)**.
+In plain Spring Framework applications, `.env` keys are resolved **strictly**.
+
+For example, under Spring Boot:
+
+```dotenv
+MY_SERVICE_URL=https://example.com
+```
+
+can be accessed as:
+
+```properties
+my.service.url
+```
 
 ---
 
@@ -150,9 +162,17 @@ All configuration is optional. Defaults are sensible.
 
 ### Spring Framework vs Spring Boot
 
-- Spring Boot users get relaxed binding for configuration keys (`springdotenv.*`), using standard Spring Boot rules (kebab-case, camelCase, uppercase environment variables).
-- In plain Spring Framework, `springdotenv.*` configuration keys must be specified exactly.
-- Variables defined inside the `.env` file itself are resolved using relaxed name matching in **both** Spring Boot and plain Spring Framework.
+- **Spring Boot 3 / 4**
+  - Relaxed binding is applied to:
+    - `springdotenv.*` configuration keys
+    - variables defined inside `.env` files
+  - Standard Spring Boot rules apply (kebab-case, camelCase, uppercase environment variables).
+
+- **Plain Spring Framework**
+  - Configuration is **strict**:
+    - `springdotenv.*` keys must match exactly
+    - `.env` entries must match exactly
+  - No relaxed binding is applied.
 
 | System property                         | Environment variable                       | Default value |
 |-----------------------------------------|--------------------------------------------|---------------|
@@ -162,6 +182,10 @@ All configuration is optional. Defaults are sensible.
 | `springdotenv.ignoreIfMalformed`        | `SPRINGDOTENV_IGNORE_IF_MALFORMED`         | `false`       |
 | `springdotenv.ignoreIfMissing`          | `SPRINGDOTENV_IGNORE_IF_MISSING`           | `true`        |
 | `springdotenv.exportToSystemProperties` | `SPRINGDOTENV_EXPORT_TO_SYSTEM_PROPERTIES` | `false`       |
+
+⚠️ **Binding semantics note**  
+The keys shown above support relaxed binding **only in Spring Boot applications**.  
+When using the core `spring-dotenv` module without Spring Boot, these keys must be specified exactly.
 
 ### Notable options
 
@@ -194,7 +218,7 @@ Spring-Dotenv follows the configuration rules of the runtime it integrates with.
 
 #### Spring Boot applications
 
-When used with **Spring Boot 3 or 4**, all `springdotenv.*` configuration options and `.env` file entries participate in **standard Spring Boot relaxed binding**.
+When used with **Spring Boot 3 or 4**, all `springdotenv.*` configuration options **and `.env` file entries** participate in **standard Spring Boot relaxed binding**.
 
 This means configuration keys are interchangeable across common naming styles:
 
@@ -218,10 +242,11 @@ This behavior is delegated to Spring Boot’s native `Binder` and matches Boot�
 
 #### Spring Framework (non-Boot) applications
 
-When using the **core** `spring-dotenv` **module without Spring Boot**, configuration keys are **strict**:
+When using the **core** `spring-dotenv` **module without Spring Boot**, all configuration is **strict**:
 
-- Property names must match exactly
-- No relaxed binding is applied
+- `springdotenv.*` keys must match exactly  
+- `.env` entries are resolved by exact name only  
+- No relaxed binding or env-var style name conversion is applied
 
 This distinction is intentional and mirrors the behavior of Spring Framework itself.
 
