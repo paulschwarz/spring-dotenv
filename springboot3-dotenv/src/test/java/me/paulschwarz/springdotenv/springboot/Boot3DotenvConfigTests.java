@@ -17,7 +17,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.StandardEnvironment;
 import org.springframework.core.env.SystemEnvironmentPropertySource;
 
-class Boot3DotenvRelaxedBindingTests {
+class Boot3DotenvConfigTests {
 
     private final Boot3DotenvConfigLoader loader = new Boot3DotenvConfigLoader();
 

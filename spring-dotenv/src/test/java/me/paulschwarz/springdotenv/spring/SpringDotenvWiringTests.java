@@ -3,12 +3,8 @@ package me.paulschwarz.springdotenv.spring;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Map;
-
 import me.paulschwarz.springdotenv.DotenvConfig;
-import me.paulschwarz.springdotenv.spring.DotenvEnvironmentApplier;
-import me.paulschwarz.springdotenv.spring.SpringDotenvConfigLoader;
 import me.paulschwarz.springdotenv.testkit.SystemPropertiesExtension;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.api.parallel.ResourceLock;

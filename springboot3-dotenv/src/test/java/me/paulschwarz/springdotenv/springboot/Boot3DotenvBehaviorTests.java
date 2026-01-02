@@ -32,6 +32,11 @@ class Boot3DotenvBehaviorTests {
             assertThat(ctx.getEnvironment().getProperty("dotenv.only")).isEqualTo("from dotenv");
             assertThat(ctx.getEnvironment().getProperty("dotenv-only")).isEqualTo("from dotenv");
             assertThat(ctx.getEnvironment().getProperty("dotenv_only")).isEqualTo("from dotenv");
+            assertThat(ctx.getEnvironment().getProperty("my.service[0].other")).isEqualTo("zero");
+            assertThat(ctx.getEnvironment().getProperty("my.service[1].other")).isEqualTo("one");
+            assertThat(ctx.getEnvironment().getProperty("my.list[0]")).isEqualTo("zero");
+            assertThat(ctx.getEnvironment().getProperty("my.list[1]")).isEqualTo("one");
+            assertThat(ctx.getEnvironment().getProperty("my-list-1")).isEqualTo("one");
         }
     }
 
