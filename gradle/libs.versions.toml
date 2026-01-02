@@ -3,7 +3,7 @@ java = "17"
 dotenv = "3.2.0"
 spring6 = "6.2.15"
 spring-boot3 = "3.5.9"
-spring-boot4 = "4.0.0"
+spring-boot4 = "4.0.1"
 errorprone-core = "2.42.0"
 errorprone-gradle = "4.3.0"
 
@@ -22,6 +22,7 @@ spring-context = { module = "org.springframework:spring-context" }
 spring-boot3-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot3" }
 spring-boot4-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot4" }
 spring-boot = { module = "org.springframework.boot:spring-boot" }
+spring-boot-configuration-processor = { module = "org.springframework.boot:spring-boot-configuration-processor" }
 errorprone-core = { module = "com.google.errorprone:error_prone_core", version.ref = "errorprone-core" }
 gradle-errorprone-plugin = { module = "net.ltgt.gradle:gradle-errorprone-plugin", version.ref = "errorprone-gradle" }
 

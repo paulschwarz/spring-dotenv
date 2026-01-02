@@ -44,11 +44,17 @@ public class DotenvPropertySource extends PropertySource<DotenvPropertyLoader> {
         return value;
     }
 
-    public static void addToEnvironment(ConfigurableEnvironment environment) {
-        addToEnvironment(environment, DotenvConfig.load());
-    }
-
     public static void addToEnvironment(ConfigurableEnvironment environment, DotenvConfig dotenvConfig) {
+        var sources = environment.getPropertySources();
+
+        if (sources.contains(DOTENV_PROPERTY_SOURCE_NAME)) {
+            log.warn("A property source named " + DOTENV_PROPERTY_SOURCE_NAME
+                + " is already present in the environment. Duplicate registration was skipped; please verify"
+                + " configuration to avoid redundant initialization.");
+
+            return;
+        }
+
         DotenvPropertySource dotenvPropertySource = new DotenvPropertySource(dotenvConfig);
 
         log.info(LogMessage.format("Initialized Dotenv with %s", dotenvConfig));
@@ -56,8 +62,6 @@ public class DotenvPropertySource extends PropertySource<DotenvPropertyLoader> {
         if (dotenvConfig.exportToSystemProperties()) {
             log.trace("Dotenv environment available as system properties");
         } else {
-            var sources = environment.getPropertySources();
-
             if (sources.contains(StandardEnvironment.SYSTEM_ENVIRONMENT_PROPERTY_SOURCE_NAME)) {
                 sources.addAfter(StandardEnvironment.SYSTEM_ENVIRONMENT_PROPERTY_SOURCE_NAME, dotenvPropertySource);
             } else if (sources.contains(StandardEnvironment.SYSTEM_PROPERTIES_PROPERTY_SOURCE_NAME)) {

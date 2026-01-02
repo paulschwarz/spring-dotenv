@@ -5,7 +5,6 @@ import me.paulschwarz.springdotenv.DotenvPropertySource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.core.env.ConfigurableEnvironment;
-import java.util.Optional;
 
 public final class DotenvEnvironmentApplier {
 
@@ -14,14 +13,10 @@ public final class DotenvEnvironmentApplier {
     private DotenvEnvironmentApplier() {}
 
     public static void apply(ConfigurableEnvironment env, DotenvConfig dotenvConfig) {
-        boolean enabled = Optional
-            .ofNullable(env.getProperty("springdotenv.enabled", Boolean.class))
-            .orElse(dotenvConfig.enabled());
-
-        log.debug("springdotenv.enabled=" + enabled);
-
-        if (enabled) {
+        if (dotenvConfig.enabled()) {
             DotenvPropertySource.addToEnvironment(env, dotenvConfig);
+        } else {
+            log.debug("Spring Dotenv is disabled (springdotenv.enabled=false)");
         }
     }
 }

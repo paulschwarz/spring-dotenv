@@ -1,4 +1,4 @@
-package me.paulschwarz.springdotenv.springboot.testsupport;
+package me.paulschwarz.springdotenv.springboot.testkit;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;

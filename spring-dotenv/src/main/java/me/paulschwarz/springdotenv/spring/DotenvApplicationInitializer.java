@@ -1,10 +1,14 @@
 package me.paulschwarz.springdotenv.spring;
 
-import me.paulschwarz.springdotenv.DotenvPropertySource;
+import me.paulschwarz.springdotenv.DotenvConfig;
+import me.paulschwarz.springdotenv.DotenvConfigLoader;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.ConfigurableEnvironment;
 
 public class DotenvApplicationInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+
+    private static final DotenvConfigLoader dotenvConfigLoader = new SpringDotenvConfigLoader();
 
     /**
      * Initialize the given application context.
@@ -13,6 +17,8 @@ public class DotenvApplicationInitializer implements ApplicationContextInitializ
      */
     @Override
     public void initialize(final ConfigurableApplicationContext ctx) {
-        DotenvPropertySource.addToEnvironment(ctx.getEnvironment());
+        ConfigurableEnvironment env = ctx.getEnvironment();
+        DotenvConfig dotenvConfig = dotenvConfigLoader.load(env);
+        DotenvEnvironmentApplier.apply(env, dotenvConfig);
     }
 }
